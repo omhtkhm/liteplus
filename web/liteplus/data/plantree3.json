@@ -1,0 +1,47 @@
+{
+  "result": "success",
+  "root": {
+    expanded: true,
+    "iconCls": "ico-noimage",
+    children: [
+      {
+        "text": "SELECT STATEMENT   ALL_ROWS-Cost : 6",
+        "expanded": true,
+        "iconCls": "ico-noimage",
+        "children": [
+          {
+            "text": "MERGE JOIN   ",
+            "expanded": true,
+            "iconCls": "ico-noimage",
+            "children": [
+              {
+                "text": "TABLE ACCESS BY INDEX ROWID SCOTT.DEPT(2) ANALYZED",
+                "expanded": true,
+                "iconCls": "ico-noimage",
+                "children": [
+                  {
+                    "text": "INDEX FULL SCAN SCOTT.PK_DEPT ANALYZED",
+                    "leaf": true,
+                    "iconCls": "ico-noimage"
+                  }
+                ]
+              },
+              {
+                "text": "SORT JOIN   (\"EMP\".\"DEPTNO\"=\"DEPT\".\"DEPTNO\") (\"EMP\".\"DEPTNO\"=\"DEPT\".\"DEPTNO\")",
+                "expanded": true,
+                "iconCls": "ico-noimage",
+                "children": [
+                  {
+                    "text": "TABLE ACCESS FULL SCOTT.EMP(1) ANALYZED",
+                    "leaf": true,
+                    "iconCls": "ico-noimage"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

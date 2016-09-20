@@ -1,0 +1,53 @@
+{
+  "success": true,
+  "messageType": "plan",
+  "root": {
+    "expanded": true,
+    "iconCls": "co-noimage",
+    "children": [
+      {
+        "text": "SELECT STATEMENT   ALL_ROWS-Cost : 14",
+        "expanded": true,
+        "iconCls": "ico-noimage",
+        "children": [
+          {
+            "text": "HASH JOIN    (\"EMP\".\"DEPTNO\"=\"DEPT\".\"DEPTNO\")",
+            "expanded": true,
+            "iconCls": "ico-noimage",
+            "children": [
+              {
+                "text": "MERGE JOIN CARTESIAN  ",
+                "expanded": true,
+                "iconCls": "ico-noimage",
+                "children": [
+                  {
+                    "text": "TABLE ACCESS FULL SCOTT.DEPT(3) ANALYZED",
+                    "leaf": true,
+                    "iconCls": "ico-noimage",
+                  },
+                  {
+                    "text": "BUFFER SORT  ",
+                    "expanded": true,
+                    "iconCls": "ico-noimage",
+                    "children": [
+                      {
+                        "text": "TABLE ACCESS FULL SCOTT.DEPT(4) ANALYZED",
+                        "leaf": true,
+                        "iconCls": "ico-noimage",
+                      }
+                    ]
+                  },
+                  {
+                    "text": "TABLE ACCESS FULL SCOTT.EMP(1) ANALYZED",
+                    "leaf": true,
+                    "iconCls": "ico-noimage",
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
