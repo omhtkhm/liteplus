@@ -191,26 +191,6 @@ Ext.define('Plus.controller.Query',{
         return selectedText;
     },
 
-    //caretPosX: function(el) {  // textarea에서 가로 caret position 가져오는 함수, 열
-    //    varpos = 0;
-    //    // IE Support
-    //    if (document.selection) {
-    //        el.focus ();
-    //        var Sel = document.selection.createRange();
-    //        var SelLength = document.selection.createRange().text.length;
-    //        Sel.moveStart ('character', -el.value.length);
-    //        pos = Sel.text.length - SelLength;
-    //    }
-    //    // Firefox support
-    //    else if (el.selectionStart || el.selectionStart == '0')
-    //        pos = el.selectionStart;
-    //    return pos;
-    //},
-    //
-    //caretPosY: function(tArea) { // textarea에서 세로 caret position 가져오는 함수, 행
-    //    return tArea.value.substr(0, tArea.selectionStart).split("\n").length;
-    //},
-
     getLineNumberAndColumnIndex: function(textarea){
         var textLines = textarea.value.substr(0, textarea.selectionStart).split("\n");
         var currentLineNumber = textLines.length;
