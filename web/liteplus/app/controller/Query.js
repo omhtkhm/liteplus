@@ -41,6 +41,7 @@ Ext.define('Plus.controller.Query',{
             //console.log(queryResultLabel.text);
         } else {  // 쿼리실행시 Exception이 발생한 경우
             queryResultLabel.setText(firstRowTime);
+            //Ext.MessageBox.alert("sql Error: " , jsonResultSet);
         }
     },
 
@@ -107,52 +108,6 @@ Ext.define('Plus.controller.Query',{
         var clientMessage = JSON.stringify(clientMessage);
         console.log(clientMessage);
         mywebsocket.send(clientMessage);
-
-        // Ajax통신시 참고
-        //Ext.Ajax.request({
-        //    //url: './grid_data2.json',
-        //    url: '../QueryToJsonServlet',
-        //    timeout: 60000,
-        //    method: 'GET',
-        //    //method: 'POST',
-        //    params: {
-        //        QueryText: sqltext
-        //    },
-        //    success: function (resp) {
-        //        // do something
-        //        //var gridResult = Ext.getCmp('gridQueryResultId');
-        //        var gridResult = Ext.ComponentQuery.query('gridresult[name=gridsqlqueryresult]')[0];
-        //
-        //        //console.log(resp.responseText);
-        //
-        //        var jsonResult = Ext.JSON.decode(resp.responseText);
-        //
-        //        var querySuccess = jsonResult.querySuccess;
-        //        var firstRowTime = jsonResult.FirstRowTime;
-        //        var jsonResultSet = jsonResult.resultset;
-        //        console.log(querySuccess);
-        //        console.log(firstRowTime);
-        //
-        //        gridResult.reconfigure(createStore(jsonResultSet), createColumns(jsonResultSet));
-        //        var queryResultLabel = Ext.ComponentQuery.query('label[name=queryresultlabelname]')[0];
-        //
-        //        if(querySuccess) {
-        //            //queryResultLabel.setText("First Rows Retrieved In " + firstRowTime + " seconds");
-        //            queryResultLabel.setText(firstRowTime);
-        //            //console.log(queryResultLabel.text);
-        //        } else {
-        //            queryResultLabel.setText(firstRowTime);
-        //        }
-        //    },
-        //    failure: function (resp) {
-        //        if( resp == null ) {
-        //            Ext.MessageBox.alert("Ajax Call Error: " , resp.responseText);
-        //        } else {
-        //            Ext.MessageBox.alert("Ajax Call Error: " , "404 (Not Found)");
-        //        }
-        //        console.log('Ajax Call Error');
-        //    }
-        //});
     },
 
     onKeyDown: function(textarea, e, eOpts){
