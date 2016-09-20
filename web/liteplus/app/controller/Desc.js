@@ -175,27 +175,15 @@ Ext.define('Plus.controller.Desc',{
     //var one, output = {};
     var tableInfoArray = new Array();
     for (one in input[0]) {
-        //console.log(one);
-        //console.log(input[0][one]);
-        //if (input[0].hasOwnProperty(one)) {
-            //output[input[one]] = one;
-            //output['field1'] = one;
-            //output['field2'] = input[0][one];
-        //}
         var tableRow = new Object();
         tableRow.field1 = one;
         tableRow.field2 = input[0][one];
         tableInfoArray.push(tableRow);
     }
-        //console.log(output);
-        //console.log(tableInfoArray);
-    //return output;
         return tableInfoArray;
     },
 
     onKeyDown: function(textarea, e, eOpts){
-        //console.log('key down');
-        //if(e.getCharCode()== (Ext.event.Event.CTRL && Ext.event.Event.ALT  && Ext.event.Event.P)){
         if(e.getCharCode()== (Ext.EventObject.ALT && Ext.EventObject.F5)){
             console.log('F5 key down');
             this.onTableInfoClick();

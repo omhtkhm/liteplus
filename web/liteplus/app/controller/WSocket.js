@@ -12,8 +12,6 @@ Ext.define('Plus.controller.WSocket', {
         var ip = location.host;
 
         mywebsocket = Ext.create('Ext.ux.WebSocket', {
-            //url: 'ws://10.10.202.66/websocket' ,
-            //url: 'ws://127.0.0.1/websocket',
             url: 'ws://'+ip+'/wshandler',
             listeners: {
                 open: function (ws) {
@@ -28,18 +26,12 @@ Ext.define('Plus.controller.WSocket', {
                 },
                 message: function (ws, message) {
                     console.log('A new message is arrived: ' + message);
-                    //Plus.app.getController('Query').onQueryClick();
-                    //showGrid(message);
-                    //me.fire(message);
                     me.messageHandler(message);
                 }
             }
         });
     },
 
-    //fire : function(message){
-    //    this.fireEvent('newmessage', message);
-    //}
     messageHandler : function(message){
         var jsonResult = Ext.JSON.decode(message);
         var messageType = jsonResult.messageType;

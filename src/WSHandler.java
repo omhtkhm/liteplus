@@ -10,11 +10,6 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/wshandler")
 public class WSHandler extends websocket {
-    //    private static final String SQL_LIST = "SELECT ID, ARTICLE_NAME from JCGEXAMPLE";
-//    Log2 log;
-//    public WSHandler(){
-//        log = Log2.getInstance();
-//    }
     String replymessage;
 
     @OnMessage

@@ -9,22 +9,6 @@ public class Log {
     static FileWriter fw;
     static final String ENTER = System.getProperty("line.separator");
 
-//    private static Log2 instance = new Log2();
-//    private static Log instance;
-
-//    private Log() {
-//        try {
-//            fw = new FileWriter(logFile, true);
-//        } catch (IOException e){}
-//    }
-
-//    public static Log getInstance () {
-//        if(instance  ==null){//있는지 체크 없으면
-//            instance  = new Log2 (); //생성한뒤
-//        }
-//        return instance;
-//    }
-
     public static void close() {
         try {
             fw.close();
@@ -42,10 +26,4 @@ public class Log {
             System.err.println("IOException!");
         }
     }
-
-//    public void finalize() {
-//        try {
-//            fw.close();
-//        } catch (IOException e){}
-//    }
 }
