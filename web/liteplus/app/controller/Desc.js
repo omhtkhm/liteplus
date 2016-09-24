@@ -67,7 +67,7 @@ Ext.define('Plus.controller.Desc',{
 
         var success = jsonResult.success;
         var jsonResultSetColumnInfo = jsonResult.resultsetcolumninfo;
-        console.log(success);
+        //console.log(success);
 
         columninfo.reconfigure(this.createStore(jsonResultSetColumnInfo), this.createColumns(jsonResultSetColumnInfo));
 
