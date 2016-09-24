@@ -63,7 +63,7 @@ public class TableInfo {
 
             //////////////////////////////////////////////////////
             /// Table 기본정보를 가져와서 JsonObject 만들기 , SELECT * FROM ALL_TABLES WHERE TABLE_NAME='EMP'
-            strModifiedSQLText ="SELECT * FROM ALL_TABLES WHERE TABLE_NAME='EMP'";
+            strModifiedSQLText ="SELECT * FROM ALL_TABLES WHERE OWNER=? and TABLE_NAME=?";
 //            System.out.println("tableinfo sql : " + strModifiedSQLText);
 //            Log.debug("tableinfo sql : " + strModifiedSQLText);
 //            statement = connection.prepareStatement(strModifiedSQLText);
@@ -72,7 +72,8 @@ public class TableInfo {
             rstojson.processResultSet(rs, aInfo, "resultsettableinfo"); // aInfo에 json 리절트셋 추가
             //////////////////////////////////////////////////////
             /// Constraint정보를 가져와서 JsonObject 만들기 ,
-            strModifiedSQLText ="SELECT c.constraint_name,c.constraint_type,TO_CHAR(NULL) COLUMNS,c.search_condition,c.r_owner,c.r_constraint_name,TO_CHAR( NULL ) ref_info,c.delete_rule,c.status,c.deferrable,c.deferred,c.validated,c.generated,c.last_change FROM all_constraints c WHERE 1=1 AND c.owner='SCOTT' AND c.table_name='EMP'";
+//            strModifiedSQLText ="SELECT c.constraint_name,c.constraint_type,TO_CHAR(NULL) COLUMNS,c.search_condition,c.r_owner,c.r_constraint_name,TO_CHAR( NULL ) ref_info,c.delete_rule,c.status,c.deferrable,c.deferred,c.validated,c.generated,c.last_change FROM all_constraints c WHERE 1=1 AND c.owner='SCOTT' AND c.table_name='EMP'";
+            strModifiedSQLText ="SELECT c.constraint_name,c.constraint_type,TO_CHAR(NULL) COLUMNS,c.search_condition,c.r_owner,c.r_constraint_name,TO_CHAR( NULL ) ref_info,c.delete_rule,c.status,c.deferrable,c.deferred,c.validated,c.generated,c.last_change FROM all_constraints c WHERE 1=1 AND c.owner=? AND c.table_name=?";
 //            System.out.println("constraintinfo sql : " + strModifiedSQLText);
 //            Log.debug("constraintinfo sql : " + strModifiedSQLText);
 //            statement = connection.prepareStatement(strModifiedSQLText);
@@ -81,7 +82,8 @@ public class TableInfo {
             rstojson.processResultSet(rs, aInfo, "resultsetconstraintinfo"); // aInfo에 json 리절트셋 추가
             //////////////////////////////////////////////////////
             /// Grants정보를 가져와서 JsonObject 만들기 ,
-            strModifiedSQLText ="SELECT grantor,grantee,privilege,grantable,hierarchy FROM all_tab_privs WHERE 1=1 AND table_schema='SYS' AND table_name='JAVASNM'";
+//            strModifiedSQLText ="SELECT grantor,grantee,privilege,grantable,hierarchy FROM all_tab_privs WHERE 1=1 AND table_schema='SYS' AND table_name='JAVASNM'";
+            strModifiedSQLText ="SELECT grantor,grantee,privilege,grantable,hierarchy FROM all_tab_privs WHERE 1=1 AND table_schema=? AND table_name=?";
 //            System.out.println("grantsinfo sql : " + strModifiedSQLText);
 //            Log.debug("grantsinfo sql : " + strModifiedSQLText);
 //            statement = connection.prepareStatement(strModifiedSQLText);
@@ -91,7 +93,8 @@ public class TableInfo {
             //////////////////////////////////////////////////////
             /// Trigger정보를 가져와서 JsonObject 만들기 ,
 //            strModifiedSQLText = "select 'CREATE OR REPLACE TRIGGER ' || OWNER || '.' || TRIGGER_NAME || '  ' ||  case when INSTR(TRIGGER_TYPE,'STATEMENT')=0 then TRIGGER_TYPE else SUBSTR (TRIGGER_TYPE, 1, INSTR(TRIGGER_TYPE, 'STATEMENT')- 2) end  || ' ' || TRIGGERING_EVENT || ' ON ' || TABLE_OWNER || '.' || TABLE_NAME || ' ' || COLUMN_NAME ||  ' ' as triggerddl, TRIGGER_BODY from all_triggers where TABLE_OWNER='XDB' and TABLE_NAME='PATH_VIEW'";
-            strModifiedSQLText = "select 'CREATE OR REPLACE TRIGGER ' || OWNER || '.' || TRIGGER_NAME as TRGSTMT1, case when INSTR(TRIGGER_TYPE,'STATEMENT')=0 then TRIGGER_TYPE else SUBSTR (TRIGGER_TYPE, 1, INSTR(TRIGGER_TYPE, 'STATEMENT')- 2) end || ' ' || TRIGGERING_EVENT || ' ON ' || TABLE_OWNER || '.' || TABLE_NAME || ' ' || COLUMN_NAME as TRGSTMT2, TRIGGER_BODY from all_triggers where TABLE_OWNER='XDB' and TABLE_NAME='PATH_VIEW'";
+//            strModifiedSQLText = "select 'CREATE OR REPLACE TRIGGER ' || OWNER || '.' || TRIGGER_NAME as TRGSTMT1, case when INSTR(TRIGGER_TYPE,'STATEMENT')=0 then TRIGGER_TYPE else SUBSTR (TRIGGER_TYPE, 1, INSTR(TRIGGER_TYPE, 'STATEMENT')- 2) end || ' ' || TRIGGERING_EVENT || ' ON ' || TABLE_OWNER || '.' || TABLE_NAME || ' ' || COLUMN_NAME as TRGSTMT2, TRIGGER_BODY from all_triggers where TABLE_OWNER='XDB' and TABLE_NAME='PATH_VIEW'";
+            strModifiedSQLText = "select 'CREATE OR REPLACE TRIGGER ' || OWNER || '.' || TRIGGER_NAME as TRGSTMT1, case when INSTR(TRIGGER_TYPE,'STATEMENT')=0 then TRIGGER_TYPE else SUBSTR (TRIGGER_TYPE, 1, INSTR(TRIGGER_TYPE, 'STATEMENT')- 2) end || ' ' || TRIGGERING_EVENT || ' ON ' || TABLE_OWNER || '.' || TABLE_NAME || ' ' || COLUMN_NAME as TRGSTMT2, TRIGGER_BODY from all_triggers where TABLE_OWNER=? and TABLE_NAME=?";
 //            System.out.println("triggerinfo sql : " + strModifiedSQLText);
 //            Log.debug("triggerinfo sql : " + strModifiedSQLText);
 //            statement = connection.prepareStatement(strModifiedSQLText);
@@ -101,14 +104,18 @@ public class TableInfo {
             //////////////////////////////////////////////////////
             /// Trigger정보를 가져와서 JsonObject 만들기 ,
 //            strModifiedSQLText = "select 'CREATE OR REPLACE TRIGGER ' || OWNER || '.' || TRIGGER_NAME || '  ' ||  case when INSTR(TRIGGER_TYPE,'STATEMENT')=0 then TRIGGER_TYPE else SUBSTR (TRIGGER_TYPE, 1, INSTR(TRIGGER_TYPE, 'STATEMENT')- 2) end  || ' ' || TRIGGERING_EVENT || ' ON ' || TABLE_OWNER || '.' || TABLE_NAME || ' ' || COLUMN_NAME ||  ' ' as triggerddl, TRIGGER_BODY from all_triggers where TABLE_OWNER='XDB' and TABLE_NAME='PATH_VIEW'";
-            strModifiedSQLText = "SELECT dbms_metadata.get_ddl( 'TABLE' , 'EMP' , 'SCOTT' ) as DDL from dual";
+//            strModifiedSQLText = "SELECT dbms_metadata.get_ddl( 'TABLE' , 'EMP' , 'SCOTT' ) as DDL from dual";
+            strModifiedSQLText = "SELECT dbms_metadata.get_ddl( 'TABLE' , ? , ? ) as DDL from dual";
+            statement = connection.prepareStatement(strModifiedSQLText);
+            statement.setString(1, strTable);
+            statement.setString(2, strOwner);
+            rs = statement.executeQuery();
 //            System.out.println("triggerinfo sql : " + strModifiedSQLText);
 //            Log.debug("triggerinfo sql : " + strModifiedSQLText);
 //            statement = connection.prepareStatement(strModifiedSQLText);
 //            rs = statement.executeQuery();
-            rstojson = processSQL();
+            rstojson = new ResultSetToJsonObject();
             rstojson.processResultSet(rs, aInfo, "resultsetddlinfo"); // aInfo에 json 리절트셋 추가
-
         }catch (SQLException e) {
             e.printStackTrace();
 //            sqlExceptionToGrid(e);

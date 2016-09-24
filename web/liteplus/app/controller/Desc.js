@@ -83,6 +83,9 @@ Ext.define('Plus.controller.Desc',{
         var tableinfos = Ext.ComponentQuery.query('tableinfo[name=tableinfo]');
         var tableinfo = tableinfos[tableinfos.length-1];
         var jsonResultSetTableInfo = jsonResult.resultsettableinfo;
+        var tableinfotitle = jsonResultSetTableInfo[0].OWNER+'.'+jsonResultSetTableInfo[0].TABLE_NAME;
+        console.log(tableinfotitle);
+        tableinfo.setTitle(tableinfotitle);
         tableinfo.reconfigure(this.createTransposeStore(jsonResultSetTableInfo), this.createTransposeColumns());
         ////////////////////////////////////////
         // Constrait정보 가져와서 뿌리기
