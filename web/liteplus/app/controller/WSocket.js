@@ -25,7 +25,7 @@ Ext.define('Plus.controller.WSocket', {
                     Ext.Error.raise(error);
                 },
                 message: function (ws, message) {
-                    console.log('A new message is arrived: ' + message);
+                    //console.log('A new message is arrived: ' + message); 서버측 응답메시지. 필요시만 찍을 것
                     me.messageHandler(message);
                 }
             }

@@ -27,8 +27,11 @@ Ext.define('Plus.controller.Desc',{
         var me = this;
         //var sqltext = Ext.getCmp('textareaId').getValue(); //id로 가져올 경우 사용
         var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-        var sqltext = sqltextaray.getValue();
-        var sqltext = 'EMP';
+        var tablename = this.getTableFromLine(sqltextaray); //테이블명을 뽑음
+
+        //var sqltext = sqltextaray.getValue();
+        //var sqltext = 'EMP';
+        var sqltext = tablename.toUpperCase();
 
         console.log(sqltext);
 
@@ -188,5 +191,49 @@ Ext.define('Plus.controller.Desc',{
             console.log('F5 key down');
             this.onTableInfoClick();
         }
+    },
+
+    getTableFromLine: function(sqltextaray){
+        //var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var textarea = sqltextaray.inputEl.dom;
+        var nLineCol = this.getController('Query').getLineNumberAndColumnIndex(textarea); //textarea에서 커서위치 가져오기
+        var nRow = nLineCol.line;
+        var nCol = nLineCol.col;
+        var lines = textarea.value.split('\n');
+        var nText = lines[(nRow-1)];
+        //console.log(nText);
+        var len = nText.length;
+        //var startIndex = nText.lastIndexOf(' ',nCol);
+        //var endIndex = nText.indexOf(' ',nCol);
+        //var endIndex2 = nText.indexOf(';',nCol);
+        //if(startIndex==-1) startIndex = 0;
+        //if(endIndex==-1) endIndex=len;
+        //if((endIndex2 != -1) && (endIndex > endIndex2)) { endIndex = endIndex2}
+        var firstPart=nText.substring(0,nCol);
+        var secondPart=nText.substring(nCol,len);
+        console.log(firstPart +'|' + secondPart);
+        var regExp = /[;,=\s()|&]+/g;
+        var arr = firstPart.match(regExp);
+        //console.log(arr[arr.length-1]);
+        var startIndex =0;
+        if(arr!=null) {
+            startIndex = firstPart.lastIndexOf(arr[arr.length - 1]) + arr[arr.length - 1].length;
+        }
+        arr = secondPart.match(regExp);
+        var endIndex =len;
+        if(arr!=null) {
+            var endIndex = firstPart.length + secondPart.indexOf(arr[0]);
+        }
+        var tablename = nText.substring(startIndex,endIndex);
+        //console.log(startIndex+' '+endIndex);
+        console.log('Table/View 명칭 : ' +tablename);
+        //var startIndex=regExp.exec(firstPart).lastIndex;
+        //var endIndex=regExp.exec(secondPart).index;
+        //
+        //console.log(startIndex+' '+endIndex);
+        //for(var i=(nCol-1); i >=0 ; i--){
+        //    console.log(nText.search);
+        //}
+        return tablename;
     }
 });
