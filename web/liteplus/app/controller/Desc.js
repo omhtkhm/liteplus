@@ -9,7 +9,7 @@ Ext.define('Plus.controller.Desc',{
     alias: 'controller.desc',
 
     views: ['main.Desc'],
-
+    tablename : '',
     init: function(){
         console.log('Initialized LitePlus Controller');
         this.control({
@@ -24,35 +24,19 @@ Ext.define('Plus.controller.Desc',{
 
     onTableInfoClick: function(button, e, eOpts){
         console.log('TableInfo button click');
-        var me = this;
-        //var sqltext = Ext.getCmp('textareaId').getValue(); //id로 가져올 경우 사용
         var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var tablename = this.getTableFromLine(sqltextaray); //테이블명을 뽑음
-        //var sqltext = sqltextaray.getValue();
-        //var sqltext = 'EMP';
         var sqltext = tablename.toUpperCase(); //테이블명
-        //// 테이블명에 Owner항목이 없으면, 서버에서 Owner항목을 우선 가져온다.
-        //// 웹소켓으로 SQL문 메시지를 보낸다
-        //var clientMessage = new Object();
+        this.tablename = sqltext;
+        //var tabs = Ext.ComponentQuery.query('mainTab[name=mainTab]')[0];
+        ////var items = tabs.items.items;  // 탭패널의 아이템들 중 items라는 항목을 찾는다
+        ////tabs.setActiveTab(items[1].id);  // items의 첫번째 항목 중 id 값을 가지고 탭을 활성화 시킨다
         //
-        //clientMessage.messageType = "tableowner";
-        //clientMessage.sqltext = sqltext;
-        //var clientMessage = JSON.stringify(clientMessage);
-        //console.log(clientMessage);
-        //mywebsocket.send (clientMessage);
-        //////////////////////////////////////////////////////////////////
-        var tabs = Ext.ComponentQuery.query('mainTab[name=mainTab]')[0];
-        //var items = tabs.items.items;  // 탭패널의 아이템들 중 items라는 항목을 찾는다
-        //tabs.setActiveTab(items[1].id);  // items의 첫번째 항목 중 id 값을 가지고 탭을 활성화 시킨다
-
-        // 패널을 하나 만들어서 mainTab에다가 붙여넣기
-        var descPanel = Ext.create('Plus.view.main.Desc');
-        var tab = tabs.add(descPanel);
-        //var mainPanels = Ext.ComponentQuery.query('desc[name=desc]');
-        //mainPanels[mainPanels.length-1].title=tablename;
-        //console.log(descPanel);
-        descPanel.setTitle(sqltext);
-        tabs.setActiveTab(tab);
+        //// 패널을 하나 만들어서 mainTab에다가 붙여넣기
+        //var descPanel = Ext.create('Plus.view.main.Desc');
+        //var tab = tabs.add(descPanel);
+        //descPanel.setTitle(sqltext);
+        //tabs.setActiveTab(tab);
 
         // 웹소켓으로 SQL문 메시지를 보낸다
         var clientMessage = new Object();
@@ -66,69 +50,62 @@ Ext.define('Plus.controller.Desc',{
     },
 
     onResult : function(message) {
-        ////////////////////////////////////////
-        // 컬럼정보 가져와서 뿌리기
-        var columninfos = Ext.ComponentQuery.query('columninfo[name=columninfo]');
-        //var columninfo = Ext.ComponentQuery.query('columninfo[name=columninfo]')[0];
-        var columninfo = columninfos[columninfos.length-1];
-        //console.log(resp.responseText);
-
         var jsonResult = Ext.JSON.decode(message);
-
         var success = jsonResult.success;
-        var jsonResultSetColumnInfo = jsonResult.resultsetcolumninfo;
-        //console.log(success);
+        console.log(success);
+        if(success == true) {
+            // 탭하나 추가해서 desc Panel을 붙여서 보이게 하기
+            var tabs = Ext.ComponentQuery.query('mainTab[name=mainTab]')[0];
+            var descPanel = Ext.create('Plus.view.main.Desc');
+            var tab = tabs.add(descPanel);
+            descPanel.setTitle(this.tablename);
+            tabs.setActiveTab(tab);
 
-        columninfo.reconfigure(this.createStore(jsonResultSetColumnInfo), this.createColumns(jsonResultSetColumnInfo));
-
-        ////////////////////////////////////////
-        // Index정보 가져와서 뿌리기
-        var indexinfos = Ext.ComponentQuery.query('index[name=index]');
-        var indexinfo = indexinfos[indexinfos.length-1];
-        var jsonResultSetIndexInfo = jsonResult.resultsetindexinfo;
-        indexinfo.reconfigure(this.createStore(jsonResultSetIndexInfo), this.createColumns(jsonResultSetIndexInfo));
-
-        ////////////////////////////////////////
-        // Table기본정보 가져와서 뿌리기
-        var tableinfos = Ext.ComponentQuery.query('tableinfo[name=tableinfo]');
-        var tableinfo = tableinfos[tableinfos.length-1];
-        var jsonResultSetTableInfo = jsonResult.resultsettableinfo;
-        var tableinfotitle = jsonResultSetTableInfo[0].OWNER+'.'+jsonResultSetTableInfo[0].TABLE_NAME;
-        console.log(tableinfotitle);
-        tableinfo.setTitle(tableinfotitle);
-        tableinfo.reconfigure(this.createTransposeStore(jsonResultSetTableInfo), this.createTransposeColumns());
-        ////////////////////////////////////////
-        // Constrait정보 가져와서 뿌리기
-        var constraintinfos = Ext.ComponentQuery.query('constraint[name=constraint]');
-        var constraintinfo = constraintinfos[constraintinfos.length-1];
-        var jsonResultSetConstraintInfo = jsonResult.resultsetconstraintinfo;
-        constraintinfo.reconfigure(this.createStore(jsonResultSetConstraintInfo), this.createColumns(jsonResultSetConstraintInfo));
-        ////////////////////////////////////////
-        // Grants정보 가져와서 뿌리기
-        var grantsinfos = Ext.ComponentQuery.query('grants[name=grants]');
-        var grantsinfo = grantsinfos[grantsinfos.length-1];
-        var jsonResultSetGrantsInfo = jsonResult.resultsetgrantsinfo;
-        grantsinfo.reconfigure(this.createStore(jsonResultSetGrantsInfo), this.createColumns(jsonResultSetGrantsInfo));
-        ////////////////////////////////////////
-        // Trigger정보 가져와서 뿌리기
-        var triggerinfos = Ext.ComponentQuery.query('trigger[name=trigger]');
-        var triggerinfo = triggerinfos[triggerinfos.length-1]; // 방금 생성한 마지막 탭의 컴포넌트를 가져온다.
-        var jsonResultSetTriggerInfo = jsonResult.resultsettriggerinfo;
-        //triggerinfo.reconfigure(this.createStore(jsonResultSetTriggerInfo), this.createColumns(jsonResultSetTriggerInfo));
-        triggerinfo.setValue(jsonResultSetTriggerInfo[0].TRGSTMT1 + '\n' + jsonResultSetTriggerInfo[0].TRGSTMT2 + '\n\n' + jsonResultSetTriggerInfo[0].TRIGGER_BODY);
-        //console.log(jsonResultSetTriggerInfo[0].TRGSTMT1);
-        ////////////////////////////////////////
-        // DDL정보 가져와서 뿌리기
-        var ddlinfos = Ext.ComponentQuery.query('ddl[name=ddl]');
-        var ddlinfo = ddlinfos[ddlinfos.length-1]; // 방금 생성한 마지막 탭의 컴포넌트를 가져온다.
-        var jsonResultSetDDLInfo = jsonResult.resultsetddlinfo;
-        ddlinfo.setValue(jsonResultSetDDLInfo[0].DDL);
-        //console.log(jsonResultSetDDLInfo[0].DDL);
-        //////////////////////////////////////////////
-        if(success) {
-            //console.log(queryResultLabel.text);
-        } else {
-            //Ext.window.MessageBox.alert('Execute Plan : Error!');
+            // 컬럼정보 가져와서 뿌리기
+            var columninfos = Ext.ComponentQuery.query('columninfo[name=columninfo]');
+            var columninfo = columninfos[columninfos.length-1];
+            var jsonResultSetColumnInfo = jsonResult.resultsetcolumninfo;
+            columninfo.reconfigure(this.createStore(jsonResultSetColumnInfo), this.createColumns(jsonResultSetColumnInfo));
+            // Index정보 가져와서 뿌리기
+            var indexinfos = Ext.ComponentQuery.query('index[name=index]');
+            var indexinfo = indexinfos[indexinfos.length - 1];
+            var jsonResultSetIndexInfo = jsonResult.resultsetindexinfo;
+            indexinfo.reconfigure(this.createStore(jsonResultSetIndexInfo), this.createColumns(jsonResultSetIndexInfo));
+            // Table기본정보 가져와서 뿌리기
+            var tableinfos = Ext.ComponentQuery.query('tableinfo[name=tableinfo]');
+            var tableinfo = tableinfos[tableinfos.length - 1];
+            var jsonResultSetTableInfo = jsonResult.resultsettableinfo;
+            var tableinfotitle = jsonResultSetTableInfo[0].OWNER + '.' + jsonResultSetTableInfo[0].TABLE_NAME;
+            console.log(tableinfotitle);
+            tableinfo.setTitle(tableinfotitle);
+            tableinfo.reconfigure(this.createTransposeStore(jsonResultSetTableInfo), this.createTransposeColumns());
+            // Constrait정보 가져와서 뿌리기
+            var constraintinfos = Ext.ComponentQuery.query('constraint[name=constraint]');
+            var constraintinfo = constraintinfos[constraintinfos.length - 1];
+            var jsonResultSetConstraintInfo = jsonResult.resultsetconstraintinfo;
+            constraintinfo.reconfigure(this.createStore(jsonResultSetConstraintInfo), this.createColumns(jsonResultSetConstraintInfo));
+            // Grants정보 가져와서 뿌리기
+            var grantsinfos = Ext.ComponentQuery.query('grants[name=grants]');
+            var grantsinfo = grantsinfos[grantsinfos.length - 1];
+            var jsonResultSetGrantsInfo = jsonResult.resultsetgrantsinfo;
+            grantsinfo.reconfigure(this.createStore(jsonResultSetGrantsInfo), this.createColumns(jsonResultSetGrantsInfo));
+            // Trigger정보 가져와서 뿌리기
+            var triggerinfos = Ext.ComponentQuery.query('trigger[name=trigger]');
+            var triggerinfo = triggerinfos[triggerinfos.length - 1]; // 방금 생성한 마지막 탭의 컴포넌트를 가져온다.
+            var jsonResultSetTriggerInfo = jsonResult.resultsettriggerinfo;
+            if (jsonResultSetTriggerInfo[0] != null) {
+                triggerinfo.setValue(jsonResultSetTriggerInfo[0].TRGSTMT1 + '\n' + jsonResultSetTriggerInfo[0].TRGSTMT2 + '\n\n' + jsonResultSetTriggerInfo[0].TRIGGER_BODY);
+            } else {
+                triggerinfo.setValue('No trigger defined');
+            }
+            // DDL정보 가져와서 뿌리기
+            var ddlinfos = Ext.ComponentQuery.query('ddl[name=ddl]');
+            var ddlinfo = ddlinfos[ddlinfos.length - 1]; // 방금 생성한 마지막 탭의 컴포넌트를 가져온다.
+            var jsonResultSetDDLInfo = jsonResult.resultsetddlinfo;
+            ddlinfo.setValue(jsonResultSetDDLInfo[0].DDL);
+        } else {   // success가 false인경우
+            var errorMsg = jsonResult.errormessage;
+            Ext.Msg.alert('LitePlus', errorMsg);
         }
     },
 
@@ -167,8 +144,6 @@ Ext.define('Plus.controller.Desc',{
     createTransposeStore : function (json) {  // json에 json객체의 배열이 들어감
         var keys = this.getKeysFromJson(json[0]); // 0번째 행의 Json객체
         //console.log(keys);    // 컬럼명(필드명)을 뽑아낸다. 스토어의 fields property를 셋팅하기 위함임
-        //console.log(json);
-        //console.log(keys);
         return Ext.create('Ext.data.Store', {
             fields: [{name: 'field1', type: 'string'},
                      {name: 'field2',  type: 'string'}],
@@ -207,7 +182,6 @@ Ext.define('Plus.controller.Desc',{
     },
 
     getTableFromLine: function(sqltextaray){
-        //var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var textarea = sqltextaray.inputEl.dom;
         var nLineCol = this.getController('Query').getLineNumberAndColumnIndex(textarea); //textarea에서 커서위치 가져오기
         var nRow = nLineCol.line;
@@ -216,12 +190,6 @@ Ext.define('Plus.controller.Desc',{
         var nText = lines[(nRow-1)];
         //console.log(nText);
         var len = nText.length;
-        //var startIndex = nText.lastIndexOf(' ',nCol);
-        //var endIndex = nText.indexOf(' ',nCol);
-        //var endIndex2 = nText.indexOf(';',nCol);
-        //if(startIndex==-1) startIndex = 0;
-        //if(endIndex==-1) endIndex=len;
-        //if((endIndex2 != -1) && (endIndex > endIndex2)) { endIndex = endIndex2}
         var firstPart=nText.substring(0,nCol);
         var secondPart=nText.substring(nCol,len);
         console.log(firstPart +'|' + secondPart);
@@ -240,13 +208,6 @@ Ext.define('Plus.controller.Desc',{
         var tablename = nText.substring(startIndex,endIndex);
         //console.log(startIndex+' '+endIndex);
         console.log('Table/View 명칭 : ' +tablename);
-        //var startIndex=regExp.exec(firstPart).lastIndex;
-        //var endIndex=regExp.exec(secondPart).index;
-        //
-        //console.log(startIndex+' '+endIndex);
-        //for(var i=(nCol-1); i >=0 ; i--){
-        //    console.log(nText.search);
-        //}
         return tablename;
     }
 });
