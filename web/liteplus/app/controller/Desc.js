@@ -28,13 +28,19 @@ Ext.define('Plus.controller.Desc',{
         //var sqltext = Ext.getCmp('textareaId').getValue(); //id로 가져올 경우 사용
         var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var tablename = this.getTableFromLine(sqltextaray); //테이블명을 뽑음
-
         //var sqltext = sqltextaray.getValue();
         //var sqltext = 'EMP';
-        var sqltext = tablename.toUpperCase();
-
-        console.log(sqltext);
-
+        var sqltext = tablename.toUpperCase(); //테이블명
+        //// 테이블명에 Owner항목이 없으면, 서버에서 Owner항목을 우선 가져온다.
+        //// 웹소켓으로 SQL문 메시지를 보낸다
+        //var clientMessage = new Object();
+        //
+        //clientMessage.messageType = "tableowner";
+        //clientMessage.sqltext = sqltext;
+        //var clientMessage = JSON.stringify(clientMessage);
+        //console.log(clientMessage);
+        //mywebsocket.send (clientMessage);
+        //////////////////////////////////////////////////////////////////
         var tabs = Ext.ComponentQuery.query('mainTab[name=mainTab]')[0];
         //var items = tabs.items.items;  // 탭패널의 아이템들 중 items라는 항목을 찾는다
         //tabs.setActiveTab(items[1].id);  // items의 첫번째 항목 중 id 값을 가지고 탭을 활성화 시킨다
@@ -42,6 +48,10 @@ Ext.define('Plus.controller.Desc',{
         // 패널을 하나 만들어서 mainTab에다가 붙여넣기
         var descPanel = Ext.create('Plus.view.main.Desc');
         var tab = tabs.add(descPanel);
+        //var mainPanels = Ext.ComponentQuery.query('desc[name=desc]');
+        //mainPanels[mainPanels.length-1].title=tablename;
+        //console.log(descPanel);
+        descPanel.setTitle(sqltext);
         tabs.setActiveTab(tab);
 
         // 웹소켓으로 SQL문 메시지를 보낸다

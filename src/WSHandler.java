@@ -48,6 +48,11 @@ public class WSHandler extends websocket {
                 TableInfo myTableInfo = new TableInfo();
                 replymessage = myTableInfo.handleMessage(strQueryText);
                 break;
+//            case 3:     // tableinfo 메시지 인 경우,
+//                Log.debug("client message Type : tableowner");
+//                OwnerQuery myOwner = new OwnerQuery();
+//                replymessage = myOwner.handleMessage(strQueryText);
+//                break;
             default:
                 replymessage = "There is NO proper message type included for server to process client message!";
                 break;

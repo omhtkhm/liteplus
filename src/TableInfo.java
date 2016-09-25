@@ -19,17 +19,22 @@ public class TableInfo {
         System.out.println("receive from client : " + message);
         Log.debug("receive from client : " + message);
 
-        String[] strOwnerTable = message.split("\\."); // ower, table명이 넘어와야 함, SCOTT.EMP 또는 EMP
-        strOwner = strOwnerTable[0];
-        strTable = strOwnerTable[1];
-        Log.debug("Owner : " + strOwner);
-        Log.debug("Table : " + strTable);
-
         JsonObject aInfo = new JsonObject();
         try {
             InitialContext ctx = new InitialContext();
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/DSTest");
             connection = ds.getConnection();
+            if(message.contains(".")){ //owner와 같이 받았으면
+                String[] strOwnerTable = message.split("\\."); // ower, table명이 넘어와야 함, SCOTT.EMP 또는 EMP
+                strOwner = strOwnerTable[0];
+                strTable = strOwnerTable[1];
+            }else {   //테이블명만 받았으면
+                strTable = message;
+                strOwner = GetOwnerFromTable();
+            }
+            Log.debug("Owner : " + strOwner);
+            Log.debug("Table : " + strTable);
+
             //////// JSON 만들기 ////////////////
             aInfo.addProperty("success", true); //{"querySuccess":true}
             aInfo.addProperty("messageType", "tableinfo"); //{("messageType", "tableinfo"}
@@ -153,5 +158,19 @@ public class TableInfo {
 
         ResultSetToJsonObject rstojson = new ResultSetToJsonObject();
         return rstojson;
+    }
+
+    public String GetOwnerFromTable() throws SQLException{
+        strModifiedSQLText ="select OWNER from all_tables where table_name=?";
+        System.out.println("sql : " + strModifiedSQLText);
+        Log.debug("sql : " + strModifiedSQLText);
+        statement = connection.prepareStatement(strModifiedSQLText);
+        statement.setString(1, strTable);
+        rs = statement.executeQuery();
+        String  owner = "";
+        while (rs.next()) {
+            owner = rs.getString("OWNER");
+        }
+        return owner;
     }
 }

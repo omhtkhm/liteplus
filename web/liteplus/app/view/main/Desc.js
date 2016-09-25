@@ -2,9 +2,9 @@
  * Created by win on 2016-09-15.
  */
 Ext.define('Plus.view.main.Desc',{
-    extend: 'Ext.container.Container',
+    extend: 'Ext.Panel',
     alias: 'widget.desc',
-    name: 'Desc',
+    name: 'desc',
     title: 'EMP',
     requires:[
         'Plus.view.tableinfo.TableInfo',
