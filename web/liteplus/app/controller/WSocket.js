@@ -49,6 +49,10 @@ Ext.define('Plus.controller.WSocket', {
                 Plus.app.getController('Desc').onResult(message);
                 break;
             }
+            case 'format' : {
+                Plus.app.getController('Format').onResult(message);
+                break;
+            }
             default :{
                 console.log('Not Expected MessageType received');
             }

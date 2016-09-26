@@ -1,9 +1,6 @@
 /**
  * Created by hun on 2016-09-05.
  */
-/**
- * Created by hun on 2016-09-02.
- */
 
 //var toolbarsub01 = Ext.create('Plus.view.westToolBarSub01Class');
 //var toolbarsub02 = Ext.create('Plus.view.westToolBarSub02Class');

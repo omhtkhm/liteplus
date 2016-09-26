@@ -82,6 +82,7 @@ public class Format {
         JsonObject aInfo = new JsonObject();
         aInfo.addProperty("success", true); //{"success":true}
         aInfo.addProperty("messageType", "format");
+        aInfo.addProperty("afterformat", after);
 
         String strJson = aInfo.toString();
         Log.debug(strJson);

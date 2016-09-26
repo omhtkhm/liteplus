@@ -25,7 +25,8 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
     },{
         icon: '../resources/images/bt0103.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        tooltip: 'Format (Ctrl+Shift+F)',
+        itemId: 'format',
     },{
         icon: '../resources/images/bt0104.png',
         cls: 'x-btn-icon',

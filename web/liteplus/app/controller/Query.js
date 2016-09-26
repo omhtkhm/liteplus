@@ -83,11 +83,7 @@ Ext.define('Plus.controller.Query',{
 
         var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var selectedText = this.getSelectedText(sqltextaray); //선택된값을 가져온다.
-        console.log('selected Text: '+selectedText);
-        //var nCol = this.caretPosX(sqltextaray.inputEl.dom);
-        //console.log('caretPosition: '+nCol);
-        //var nRow = this.caretPosY(sqltextaray.inputEl.dom);
-        //console.log('lineNumber: '+nRow);
+        //console.log('selected Text: '+selectedText);
 
         var sqltext ;
         if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.

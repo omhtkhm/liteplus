@@ -21,7 +21,8 @@ Ext.application({
         'WSocket',
         'Query',
         'Plan',
-        'Desc'
+        'Desc',
+        'Format'
     ],
     //autoCreateViewport: true,
 

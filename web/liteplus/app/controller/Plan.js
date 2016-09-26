@@ -78,10 +78,8 @@ Ext.define('Plus.controller.Plan',{
     },
 
     onKeyDown: function(textarea, e, eOpts){
-        //console.log('key down');
-        //if(e.getCharCode()== (Ext.event.Event.CTRL && Ext.event.Event.ALT  && Ext.event.Event.P)){
-        if(e.getCharCode()== (Ext.EventObject.CTRL && Ext.EventObject.ALT  && Ext.EventObject.P)){
-            console.log('Ctrl+M key down');
+        if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.P)){
+            console.log('Ctrl+ALT+P key down');
             this.onPlanClick();
         }
     }
