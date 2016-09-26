@@ -9,7 +9,6 @@
         import java.util.List;
         import java.util.Stack;
 
-        import SqlToken;
 
 public class SqlFormatter {
     private final SqlParser fParser = new SqlParser();
