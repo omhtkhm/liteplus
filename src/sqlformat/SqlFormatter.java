@@ -1,15 +1,12 @@
 /**
  * Created by win on 2016-09-25.
  */
-        package sqlformat;
-
-        import java.io.BufferedReader;
-        import java.io.File;
-        import java.io.FileReader;
-        import java.util.List;
-        import java.util.Stack;
-
-        import SqlToken;
+package sqlformat;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.List;
+import java.util.Stack;
 
 public class SqlFormatter {
     private final SqlParser fParser = new SqlParser();

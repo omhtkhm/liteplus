@@ -2,8 +2,6 @@ package sqlformat;
 import java.util.ArrayList;
 import java.util.List;
 
-import SqlToken;
-
 public class SqlParser {
 
     private String fBefore;

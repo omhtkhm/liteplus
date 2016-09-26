@@ -10,7 +10,7 @@ Ext.define('Plus.controller.Query',{
     init: function(){
         console.log('Initialized QueryS Controller');
         this.control({
-            'westtoolbarsseub01 #query' : {  // 툴바에 itemId: 'query',로 설정한 경우, 사용
+            'westtoolbarsub01 #query' : {  // 툴바에 itemId: 'query',로 설정한 경우, 사용
                 click: this.onQueryClick
             },
             'centertextarea' : {
