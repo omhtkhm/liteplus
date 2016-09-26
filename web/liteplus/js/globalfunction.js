@@ -103,5 +103,5 @@ jQuery.fn.extend({
                 this.focus();
             }
         })
-    }
+    },
 })
