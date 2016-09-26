@@ -1,9 +1,6 @@
 /**
  * Created by hun on 2016-09-12.
  */
-/**
- * Created by hun on 2016-09-12.
- */
 Ext.define('Plus.controller.Desc',{
     extend: 'Ext.app.Controller',
     alias: 'controller.desc',
