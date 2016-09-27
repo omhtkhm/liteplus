@@ -23,7 +23,8 @@ Ext.application({
         'Plan',
         'Desc',
         'Format',
-        'Merge'
+        'Merge',
+        'SaveOpen'
     ],
     //autoCreateViewport: true,
 

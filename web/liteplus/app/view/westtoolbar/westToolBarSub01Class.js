@@ -36,23 +36,28 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
     },{
         icon: '../resources/images/bt0105.png',
         cls: 'x-btn-icon',
+        disabled: true,
         tooltip: 'Button 2'
     },{
         icon: '../resources/images/bt0106.png',
         cls: 'x-btn-icon',
+        disabled: true,
         tooltip: 'Button 1'
     },{
         icon: '../resources/images/bt0107.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        tooltip: 'Load From File',
+        itemId: 'load'
     },{
         icon: '../resources/images/bt0108.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        tooltip: 'Save (Ctrl+S)',
+        itemId: 'save'
     },{
         icon: '../resources/images/bt0109.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        disabled: true,
+        tooltip: 'Find...(Ctrl+F)'
     }
     ]
 

@@ -29,22 +29,27 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
     },{
         icon: '../resources/images/bt0205.png',
         cls: 'x-btn-icon',
+        disabled: true,
         tooltip: 'Button 2'
     },{
         icon: '../resources/images/bt0206.png',
         cls: 'x-btn-icon',
+        disabled: true,
         tooltip: 'Button 1'
     },{
         icon: '../resources/images/bt0207.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        tooltip: 'Insert From File',
+        itemId: 'insert'
     },{
         icon: '../resources/images/bt0208.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        tooltip: 'Save As...',
+        itemId: 'saveas'
     },{
         icon: '../resources/images/bt0209.png',
         cls: 'x-btn-icon',
+        disabled: true,
         tooltip: 'Change Connection...',
         itemId: 'connection'
     }
