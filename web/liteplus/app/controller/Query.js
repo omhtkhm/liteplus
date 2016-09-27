@@ -15,9 +15,9 @@ Ext.define('Plus.controller.Query',{
             },
             'centertextarea' : {
                 //specialkey: this.onKeyDown,
-                keydown: this.onKeyDown,
-                keyup: this.onChangeLabel,
-                click: this.onChangeLabel
+                keydown: this.onKeyDown,   // F7 쿼리키 핸들링
+                keyup: this.onChangeLabel,   // 위치이동 시 위치 표시
+                click: this.onChangeLabel    // 마우스클릭시 위치 표시
             }
         });
     },
@@ -146,7 +146,8 @@ Ext.define('Plus.controller.Query',{
     getLineNumberAndColumnIndex: function(textarea){
         var textLines = textarea.value.substr(0, textarea.selectionStart).split("\n");
         var currentLineNumber = textLines.length;
-        var currentColumnIndex = textLines[textLines.length-1].length;
+        var currentColumnIndex = textLines[textLines.length-1].length+1;
+        //var currentColumnIndex = $(textarea).getCursorPosition();
         //console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
         var nLineCol = new Object();
         nLineCol.line = currentLineNumber;
