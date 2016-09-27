@@ -19,7 +19,8 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
     },{
         icon: '../resources/images/bt0203.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        tooltip: 'Column Align Format', // format기능으로 대치함
+        itemId: 'format',
     },{
         icon: '../resources/images/bt0204.png',
         cls: 'x-btn-icon',

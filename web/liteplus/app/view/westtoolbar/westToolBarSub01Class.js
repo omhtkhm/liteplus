@@ -20,8 +20,9 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
     },{
         icon: '../resources/images/bt0102.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2',
-        //handler: switchTabTest
+        disabled: true,
+        tooltip: 'Execute With SQL Trace(Not Supported)',
+        itemId: 'trace',
     },{
         icon: '../resources/images/bt0103.png',
         cls: 'x-btn-icon',
@@ -30,7 +31,8 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
     },{
         icon: '../resources/images/bt0104.png',
         cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        tooltip: 'View Merge',
+        itemId: 'merge'
     },{
         icon: '../resources/images/bt0105.png',
         cls: 'x-btn-icon',
@@ -51,12 +53,7 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
         icon: '../resources/images/bt0109.png',
         cls: 'x-btn-icon',
         tooltip: 'Button 2'
-    },
-        {
-            icon: '../resources/images/bt0110.png',
-            cls: 'x-btn-icon',
-            tooltip: 'Button 2'
-        }
+    }
     ]
 
     //afterRender: function() {

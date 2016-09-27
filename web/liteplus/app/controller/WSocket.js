@@ -37,22 +37,21 @@ Ext.define('Plus.controller.WSocket', {
         var messageType = jsonResult.messageType;
         //var messageType = 'query';
         switch(messageType){
-            case 'query' : {
+            case 'query' :
                 Plus.app.getController('Query').onResult(message);
                 break;
-            }
-            case 'plan' : {
+            case 'plan' :
             Plus.app.getController('Plan').onResult(message);
             break;
-            }
-            case 'tableinfo' : {
+            case 'tableinfo' :
                 Plus.app.getController('Desc').onResult(message);
                 break;
-            }
-            case 'format' : {
+            case 'format' :
                 Plus.app.getController('Format').onResult(message);
                 break;
-            }
+            case 'merge' :
+                Plus.app.getController('Merge').onResult(message);
+                break;
             default :{
                 console.log('Not Expected MessageType received');
             }

@@ -53,6 +53,11 @@ public class WSHandler extends websocket {
                 Format myFormat = new Format();
                 replymessage = myFormat.handleMessage(strQueryText);
                 break;
+            case 4:     // format 메시지 인 경우,
+                Log.debug("client message Type : merge");
+                Merge myMerge = new Merge();
+                replymessage = myMerge.handleMessage(strQueryText);
+                break;
             default:
                 replymessage = "There is NO proper message type included for server to process client message!";
                 break;

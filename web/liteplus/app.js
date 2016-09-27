@@ -22,7 +22,8 @@ Ext.application({
         'Query',
         'Plan',
         'Desc',
-        'Format'
+        'Format',
+        'Merge'
     ],
     //autoCreateViewport: true,
 
