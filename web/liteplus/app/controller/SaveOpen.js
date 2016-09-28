@@ -6,10 +6,9 @@ Ext.define('Plus.controller.SaveOpen',{
     alias: 'controller.saveopen',
     views: ['westtoolbar.westToolBarSub01Class','westtoolbar.westToolBarSub02Class','popup.Save','popup.Load'],
 
-    //savepopup: '',
-    //loadpopup: '',
-    //insert: false,
-    //filename: '1';
+    forward: true,
+    casesensitive: false,
+    whole: false,
 
     init: function(){
         console.log('Initialized LitePlus SaveOpen Controller');
@@ -26,6 +25,13 @@ Ext.define('Plus.controller.SaveOpen',{
                 click: this.localStorageSave
             },'#popload' : {
                 click: this.localStorageLoad
+            },'#find' : {
+                click: this.onFindClick
+            },'#popfind' : {
+                click: this.findText
+            },'centertextarea' : {
+                keydown: this.onKeyDown
+                //specialkey: this.onKeyDown
             }
         });
     },
@@ -69,7 +75,7 @@ Ext.define('Plus.controller.SaveOpen',{
     onLoadClick: function(){
         console.log('Load button click');
         this.loadpopup = Ext.create('Plus.view.popup.Load',{
-            tempText: this.filename,
+            tempText: this.filename
         });
         this.insert = false; // insert인지 아니면 바꿔치기인지 선택
         console.log(this.filename);
@@ -98,5 +104,94 @@ Ext.define('Plus.controller.SaveOpen',{
         this.loadpopup = Ext.create('Plus.view.popup.Load');
         this.insert = true; // insert인지 아니면 바꿔치기인지 선택
         this.loadpopup.show();
-    }
+    },
+
+    onFindClick: function(){
+        console.log('Find button click');
+        var store = this.createFindComboStore();
+        this.findpopup = Ext.create('Plus.view.popup.Find',{
+            tempText: this.findname,
+            tempStore: store,
+            forward: this.forward,
+            casesensitive: this.casesensitive,
+            whole: this.whole
+    });
+        this.findpopup.show();
+    },
+
+    findText: function(){
+        console.log('pop find clicked!');
+        var findnamefield= Ext.ComponentQuery.query('textfield[name=findname]')[0];
+        this.findname = findnamefield.getValue();
+        // 정방향인지 역방향인지
+        var finddirection = Ext.ComponentQuery.query('radiofield[name=finddirection]')[0];
+        if(finddirection.getValue()) {this.forward = true;}
+        else {this.forward = false;}// 정방향 역방향 셋팅
+        // 대소분자 구분인지 아닌지
+        var casesens = Ext.ComponentQuery.query('checkboxfield[name=findoptioncase]')[0];
+        if(casesens.getValue()) {this.casesensitive = true;}  // 대소문자 구별하도록
+        else {this.casesensitive = false;}
+        //전체 문자인지 아닌지
+        var wholeword = Ext.ComponentQuery.query('checkboxfield[name=findoptionwhole]')[0];
+        if(wholeword.getValue()) {this.whole = true;}  // 대소문자 구별하도록
+        else {this.whole = false;}
+
+        this.findpopup.close();
+        var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var textareaText = sqltextarea.getValue();
+        //sqltextarea.setValue(this.findname);
+        var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
+
+        var targetText = textareaText;
+        var searchText = this.findname;
+        if(!this.casesensitive) { //대소문자 안가리면 대문자 변경
+            targetText = textareaText.toUpperCase();
+            searchText = this.findname.toUpperCase()
+        }
+        if(this.whole) { //단어가 같아야 되면
+            searchText = ' '+searchText+' ';
+        }
+        var startIndex;
+        if(this.forward) { //정방향
+            var searchfrom = currentPos+1;
+            console.log(searchfrom);
+            var startIndex = targetText.indexOf(searchText, searchfrom);
+        } else{ //역방향 검샘
+            var searchfrom = currentPos-1;
+            console.log(searchfrom);
+            var startIndex = targetText.lastIndexOf(searchText, searchfrom);
+        }
+        var queryResultLabel = Ext.ComponentQuery.query('label[name=queryresultlabelname]')[0];
+        if(startIndex != -1) { // 찾는 문자가 있는 경우,
+            if(this.whole) startIndex = startIndex +1; //단어가 같아야 되면 공백을 포함하였으므로
+            var endIndex = startIndex + this.findname.length;
+
+            $(sqltextarea.inputEl.dom).setSelection(startIndex, endIndex);
+            queryResultLabel.setText('Ready');
+        } else{ //찾는 문자가 없는 경우
+            queryResultLabel.setText('String Not Found');
+        }
+    },
+
+    createFindComboStore : function () {
+        if(!this.comboJsonArray) this.comboJsonArray = new Array();
+        var comboJson = new Object();
+        comboJson.name = this.findname;
+        this.comboJsonArray.push(comboJson);
+
+        var store =  Ext.create('Ext.data.Store', {
+            fields: [
+                {type: 'string', name: 'name'}
+            ],
+            data: this.comboJsonArray
+        });
+        return store;
+    },
+
+    onKeyDown: function(textarea, e, eOpts){
+        if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.F)){
+            console.log('Ctrl+Alt+F key down');
+            this.onFindClick();
+        }
+    },
 });

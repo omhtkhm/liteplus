@@ -56,8 +56,8 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
     },{
         icon: '../resources/images/bt0109.png',
         cls: 'x-btn-icon',
-        disabled: true,
-        tooltip: 'Find...(Ctrl+F)'
+        tooltip: 'Find...(Ctrl+Alt+F)',
+        itemId: 'find'
     }
     ]
 
