@@ -1,4 +1,6 @@
 @charset "utf-8";
+.custom-liteplusmain { background: #4d5059 !important;}
+.westtoobar { background: #4d5059 !important;}
 /*.ico-noimage { background-color:#352788; width:15px; height:15px; background-image:none !important; }*/
 /*.ico-noimage .x-tree-icon-leaf {display: none !important;}*/
 /*.ico-noimage .x-tree-icon {display: none !important;}*/
@@ -30,3 +32,4 @@
 .vertical-header-grid .x-grid3-hd-row td.x-grid3-hd {
     position: relative;
 }*/
+/*.x-panel-body-default {background: #4d5059 !important;}*/

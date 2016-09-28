@@ -4,6 +4,7 @@
 Ext.define('Plus.view.Viewport',{
     extend: 'Ext.container.Viewport',
     alias: 'widget.mainviewport',
+    cls: 'custom-liteplusmain',
     requires:[
         'Plus.view.toptoolbar.topMenuClass',
         'Plus.view.main.mainTab'
@@ -13,7 +14,7 @@ Ext.define('Plus.view.Viewport',{
         region: 'north',
         xtype: 'topMenu',
         //xtype: 'textarea',
-        height: 40,
+        height: 80,
         margin: '0 0 0 0'
     }, {
         region: 'center',

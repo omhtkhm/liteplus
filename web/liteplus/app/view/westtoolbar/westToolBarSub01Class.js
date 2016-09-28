@@ -5,8 +5,7 @@
 Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.westtoolbarsub01',
-    //controller: 'query',
-
+    cls: 'westtoobar',
     items: [{
         icon: '../resources/images/bt0101.png',
         cls: 'x-btn-icon',

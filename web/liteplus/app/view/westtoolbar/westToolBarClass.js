@@ -10,7 +10,8 @@ Ext.require('Plus.view.westtoolbar.westToolBarSub02Class');
 Ext.define('Plus.view.westtoolbar.westToolBarClass', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.westtoolbar',
-
+    width: 100,
+    cls: 'westtoobar',
     dockedItems: [{
         xtype: 'westtoolbarsub01',
         dock: 'left',

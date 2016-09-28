@@ -5,7 +5,7 @@
 Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
     extend : 'Ext.toolbar.Toolbar',
     alias: 'widget.westtoolbarsub02',
-
+    cls: 'westtoobar',
     items: [{
         icon: '../resources/images/bt0201.png',
         cls: 'x-btn-icon',
