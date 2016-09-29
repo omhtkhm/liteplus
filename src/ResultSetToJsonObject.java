@@ -1,9 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by win on 2016-09-18.
@@ -26,4 +24,24 @@ public class ResultSetToJsonObject {
             aInfo.add(strKey, infoArray);
             return aInfo;
     }
+
+    public ResultSet processSQL(Connection connection, String strModifiedSQLText) throws SQLException{
+        System.out.println("sql : " + strModifiedSQLText);
+        Log.debug("sql : " + strModifiedSQLText);
+        PreparedStatement statement;
+        ResultSet rs;
+        statement = connection.prepareStatement(strModifiedSQLText);
+        rs = statement.executeQuery();
+        return rs;
+    }
+//    public JsonObject processSQLtoJson(Connection connection, String sql, JsonObject aInfo, String strKey) throws SQLException{
+//        System.out.println("sql : " + sql);
+//        Log.debug("sql : " + sql);
+//        PreparedStatement statement;
+//        ResultSet rs;
+//        statement = connection.prepareStatement(sql);
+//        rs=statement.executeQuery();
+//        aInfo = processResultSet(rs, aInfo, strKey);
+//        return aInfo;
+//    }
 }

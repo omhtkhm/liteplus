@@ -1,5 +1,6 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -15,13 +16,6 @@ public class Plan {
     PreparedStatement statement;
     ResultSet rs;
 
-    //    private static final String SQL_LIST = "SELECT ID, ARTICLE_NAME from JCGEXAMPLE";
-//    Log2 log;
-
-//    public Plan() {
-//        log = Log2.getInstance();
-//    }
-
     public String handleMessage(String message) {
         System.out.println("receive from client : " + message);
         Log.debug("receive from client : " + message);
@@ -35,6 +29,7 @@ public class Plan {
         Log.debug("semicolin deleted : " + strModifiedSQLText);
 
         StringBuffer aInfo = new StringBuffer("");
+        JsonObject cInfo = new JsonObject(); // {}
 //        aInfo = new StringBuffer("{");
 //        aInfo.append( "\"result\": \"success\",");
 //        aInfo.append( "\"messageType\": \"plan\",");
@@ -87,8 +82,6 @@ public class Plan {
 //        String bInfo = aInfo.toString();
 //        Log.debug(bInfo);
 
-
-        String strPlan = "EXPLAIN PLAN SET STATEMENT_ID = 'liteplusweb1' FOR "+strModifiedSQLText;
         try {
             InitialContext ctx = new InitialContext();
             // Here we lookup the datasource with the name
@@ -96,9 +89,16 @@ public class Plan {
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/DSTest");
             Connection connection = ds.getConnection();
 
+            String strPlan = "EXPLAIN PLAN SET STATEMENT_ID = 'liteplusweb1' FOR "+strModifiedSQLText;
             PreparedStatement statement = connection.prepareStatement(strPlan);
-
             statement.executeQuery();  // Explain Plan for ~~ 실행
+            // id, owner, table, type 가져오기. 가져온 값은 JSON의 detailinfo에 넣는다. { detailinfo: [{ID: '0' , OWNER: 'SCOTT' , OBJECT_NAME: 'TABLE', OBJECT_TYPE: 'TABLE'},{ID: '2' , OWNER: 'SCOTT' , OBJECT_NAME: 'TABLE', OBJECT_TYPE: 'TABLE'}] }
+            String strPlanTableDetail = "select ID, OBJECT_OWNER, OBJECT_TYPE, OBJECT_TYPE from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
+            ResultSetToJsonObject rstojson = new ResultSetToJsonObject();
+            rs = rstojson.processSQL(connection, strPlanTableDetail);
+            rstojson.processResultSet(rs, cInfo, "resultsetdetailinfo"); //aInfo에 json 리절트셋 추가, {"resultsetdetailinfo": [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]}
+//            String strDetailInfo = cInfo.toString();
+//            Log.debug(strDetailInfo);
             //
             String strLeafCheck = "select PARENT_ID from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
             Log.debug(strLeafCheck);
@@ -205,6 +205,8 @@ public class Plan {
             if (connection != null) try { connection.close(); } catch(SQLException ex) {}
         }
         String bInfo = aInfo.toString();
+        JsonObject o = new JsonParser().parse(bInfo).getAsJsonObject();
+        // o와 bInfo 2개를 합쳐야 한다.
         Log.debug(bInfo);
         return bInfo;
     }

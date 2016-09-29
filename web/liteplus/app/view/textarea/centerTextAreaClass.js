@@ -9,7 +9,18 @@ Ext.define('Plus.view.textarea.centerTextAreaClass', {
     alias: 'widget.centertextarea',
 
     name: 'sqltextarea',
-    value: 'SELECT * from scott.emp, dept where emp.deptno=dept.deptno;',
+    value: 'SELECT * from \n scott.emp, \n dept \n where emp.deptno=dept.deptno; \n\n' +
+            'SELECT SUM(SAL), SUM(COMM), SUM(SAL + NVL(COMM,0)) \n' +
+            '"TOTAL MONTHLY EXPENSES OF", DEPTNO "DEPARTMENT" \n' +
+            'FROM emp GROUP BY DEPTNO \n' +
+            'HAVING SUM(SAL + NVL(COMM,0)) > 10000; \n\n' +
+            'select * from \nall_tables; \n\n' +
+        'SELECT ENAME, DNAME, GRADE \n'+
+        'FROM EMP A, DEPT B, \n'+
+        'SALGRADE C \n'+
+        'WHERE A.DEPTNO = B.DEPTNO \n'+
+        'AND SAL >= LOSAL AND SAL <= HISAL \n'+
+        'AND SAL > (SELECT AVG(SAL) FROM EMP); ',
     enableKeyEvents: true,
     cls: 'textarea',
 

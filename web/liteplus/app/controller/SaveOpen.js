@@ -31,7 +31,6 @@ Ext.define('Plus.controller.SaveOpen',{
                 click: this.findText
             },'centertextarea' : {
                 keydown: this.onKeyDown
-                //specialkey: this.onKeyDown
             }
         });
     },
@@ -192,6 +191,9 @@ Ext.define('Plus.controller.SaveOpen',{
         if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.F)){
             console.log('Ctrl+Alt+F key down');
             this.onFindClick();
+        } else if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.S)){
+            console.log('Ctrl+Alt+S key down');
+            this.onSaveClick();
         }
-    },
+    }
 });

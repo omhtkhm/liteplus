@@ -1,7 +1,6 @@
 /**
  * Created by hun on 2016-09-02.
  */
-
 Ext.define('Plus.view.toptoolbar.topMenuClass', {
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.topMenu',
@@ -11,7 +10,7 @@ Ext.define('Plus.view.toptoolbar.topMenuClass', {
     //margin: '0,0',
     initComponent: function() {
         this.items = [{
-            xtype: 'button',
+            xtype: 'label',
             html: '<img src="../resources/images/querytool.png" width="83" height="26" />'
             //text: 'Query Tool',
             //cls: 'toptoolbarbutton'

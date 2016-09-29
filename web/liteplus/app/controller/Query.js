@@ -88,8 +88,8 @@ Ext.define('Plus.controller.Query',{
         var sqltext ;
         if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
             sqltext = selectedText;
-        } else {   // 셀렉션이 없으면 전체문장으로 SQL문을 입력
-            sqltext = sqltextaray.getValue();
+        } else {   // 선택된 것이 없으면, SQL 자동 선택
+            sqltext = Plus.app.getController('Format').getAutoLinesSelection(sqltextaray);
         }
         console.log('sqltext: '+sqltext);
 

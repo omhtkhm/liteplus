@@ -49,14 +49,14 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
         scale: 'large',
         cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 2',
+        tooltip: 'Stored SQL (F9)',
         padding: '0,0'
     },{
         icon: '../resources/images/liteplus_icon_11.png',
         scale: 'large',
         cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 1',
+        tooltip: 'Previous SQL (F2)',
         padding: '0,0'
     },{
         icon: '../resources/images/liteplus_icon_13.png',

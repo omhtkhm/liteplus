@@ -15,7 +15,8 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
     },{
         icon: '../resources/images/liteplus_icon_4.png',
         cls: 'my-btn-icon',
-        tooltip: 'Button 2',
+        tooltip: 'Batch Run (F6)',
+        disabled: true,
         padding: '0,0',
         scale: 'large'
     },{
@@ -36,14 +37,14 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
         icon: '../resources/images/liteplus_icon_10.png',
         cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 2',
+        tooltip: 'Get SQL From Histroy',
         padding: '0,0',
         scale: 'large'
     },{
         icon: '../resources/images/liteplus_icon_12.png',
         cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 1',
+        tooltip: 'Previous SQL (F3)',
         padding: '0,0',
         scale: 'large'
     },{
