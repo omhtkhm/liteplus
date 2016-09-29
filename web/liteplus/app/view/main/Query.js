@@ -15,7 +15,7 @@ Ext.define('Plus.view.main.Query',{
     layout: 'border',
     items: [{
         region: 'west',
-        margin: '0 5 7 5',
+        margin: '0 5 0 5',
         xtype: 'westtoolbar'
     }, {
         region: 'south',

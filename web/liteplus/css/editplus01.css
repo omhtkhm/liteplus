@@ -17,6 +17,7 @@
     margin-right: auto !important;
     margin-left: auto !important;
 }
+label { font-weight: bold; color:black; font-family:"Courier New"; font-size:16pt; !important;}
 
 /*label {*/
     /*font: normal 12px Tahoma !important;*/

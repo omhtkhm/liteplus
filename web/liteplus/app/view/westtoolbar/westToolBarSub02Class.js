@@ -1,7 +1,6 @@
 /**
  * Created by hun on 2016-09-05.
  */
-
 Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
     extend : 'Ext.toolbar.Toolbar',
     alias: 'widget.westtoolbarsub02',
