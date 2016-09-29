@@ -11,6 +11,7 @@ Ext.define('Plus.view.textarea.centerTextAreaClass', {
     name: 'sqltextarea',
     value: 'SELECT * from scott.emp, dept where emp.deptno=dept.deptno;',
     enableKeyEvents: true,
+    cls: 'textarea',
 
     // extjs testarea는 click 이벤트가 안 먹어서 수동으로 click을 먹도록 textarea의 dom객체에 직접 이벤트 처리를 붙임
     initComponent: function() {

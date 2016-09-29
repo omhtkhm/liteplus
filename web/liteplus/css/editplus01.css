@@ -1,10 +1,26 @@
 @charset "utf-8";
-.custom-liteplusmain { background: #4d5059 !important;}
+/*.custom-liteplusmain { background: #4d5059 !important;}*/
 .westtoobar { background: #4d5059 !important;}
+.toptoolbar { background: #3d4046 !important;}
+/*.toptoolbarbutton { color:white; font-family:Tahoma; font-size:16pt; !important;}*/
 /*.ico-noimage { background-color:#352788; width:15px; height:15px; background-image:none !important; }*/
 /*.ico-noimage .x-tree-icon-leaf {display: none !important;}*/
 /*.ico-noimage .x-tree-icon {display: none !important;}*/
 .ico-noimage {display: none !important;}
+.resulttab .x-tab-inner-center { font-size:12pt; !important;}
+.maintab .x-tab-inner-center { font-size:12pt; !important;}
+.textarea .x-form-textarea { color:black; font-family:"Courier New"; font-size:16pt; !important;}
+.my-btn-icon {
+    /*background-image: url(../../resources/images/liteplus_icon_1.png) !important;*/
+    width:32px!important;
+    height:32px!important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+/*label {*/
+    /*font: normal 12px Tahoma !important;*/
+/*}*/
 /*.vertical-header-grid .x-grid3-header table,
 .vertical-header-grid .x-grid3-header-offset td {
    height: 100px!important;
@@ -33,3 +49,38 @@
     position: relative;
 }*/
 /*.x-panel-body-default {background: #4d5059 !important;}*/
+/*.my-scale.x-btn-default-large-icon button,*/
+/*.my-scale.x-btn-default-large-icon a,*/
+/*.my-scale.x-btn-default-large-icon .x-btn-inner {*/
+    /*height: 48px !important;*/
+    /*line-height: 48px;*/
+/*}*/
+
+/*.my-scale.x-btn-default-large-icon .x-btn-inner {*/
+    /*width: 48px;*/
+/*}*/
+
+/*.my-scale.x-btn-default-large-icon .x-btn-icon {*/
+    /*width: 48px;*/
+    /*height: 48px;*/
+/*}*/
+
+/*.my-scale.x-btn-default-large-icon-text-left button,*/
+/*.my-scale.x-btn-default-large-icon-text-left a {*/
+    /*height: 48px;*/
+/*}*/
+
+/*.my-scale.x-btn-default-large-icon-text-left .x-btn-inner {*/
+    /*height: 48px;*/
+    /*line-height: 48px;*/
+    /*padding-left: 52px;*/
+/*}*/
+
+/*.my-scale.x-btn-default-large-icon-text-left .x-btn-icon {*/
+    /*width: 48px;*/
+/*}*/
+
+/*.x-ie6 .my-scale.x-btn-default-large-icon-text-left .x-btn-icon,*/
+/*.x-quirks .my-scale.x-btn-default-large-icon-text-left .x-btn-icon {*/
+    /*height: 48px;*/
+/*}*/

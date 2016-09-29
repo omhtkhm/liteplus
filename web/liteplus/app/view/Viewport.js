@@ -4,7 +4,7 @@
 Ext.define('Plus.view.Viewport',{
     extend: 'Ext.container.Viewport',
     alias: 'widget.mainviewport',
-    cls: 'custom-liteplusmain',
+    //cls: 'custom-liteplusmain',
     requires:[
         'Plus.view.toptoolbar.topMenuClass',
         'Plus.view.main.mainTab'
@@ -12,10 +12,18 @@ Ext.define('Plus.view.Viewport',{
     layout: 'border',
     items: [{
         region: 'north',
-        xtype: 'topMenu',
-        //xtype: 'textarea',
+        layout: 'hbox',
         height: 80,
-        margin: '0 0 0 0'
+        //margin: '0 0 0 0',
+        items: [{
+            //xtype: 'image',
+            //src: '../resources/images/LitePlus_logo.png'
+            html: '<img src="../resources/images/LitePlus_logo.png" width="141" height="86" />',
+            border: 0
+        },{
+            xtype: 'topMenu',
+            border: 0
+        }]
     }, {
         region: 'center',
         margin: '0 0 0 0',

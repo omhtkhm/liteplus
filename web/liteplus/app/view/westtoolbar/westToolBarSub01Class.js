@@ -6,57 +6,79 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.westtoolbarsub01',
     cls: 'westtoobar',
+    //itemConfig: {
+    //    //width: 80,
+    //    //height: 80
+    //},
     items: [{
-        icon: '../resources/images/bt0101.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_1.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         tooltip: 'Execute (F7)',
         itemId: 'query',
-        action: 'query'
+        action: 'query',
+        padding: '0,0'
         //handler: queryExecute
         //listeners: {
         //    click: 'onQueryClick'
         //}
     },{
-        icon: '../resources/images/bt0102.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_3.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         disabled: true,
         tooltip: 'Execute With SQL Trace(Not Supported)',
         itemId: 'trace',
+        padding: '0,0'
     },{
-        icon: '../resources/images/bt0103.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_5.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         tooltip: 'Format (Ctrl+Shift+F)',
         itemId: 'format',
+        padding: '0,0'
     },{
-        icon: '../resources/images/bt0104.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_7.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         tooltip: 'View Merge',
-        itemId: 'merge'
+        itemId: 'merge',
+        padding: '0,0'
     },{
-        icon: '../resources/images/bt0105.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_9.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 2'
+        tooltip: 'Button 2',
+        padding: '0,0'
     },{
-        icon: '../resources/images/bt0106.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_11.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 1'
+        tooltip: 'Button 1',
+        padding: '0,0'
     },{
-        icon: '../resources/images/bt0107.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_13.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         tooltip: 'Load From File',
-        itemId: 'load'
+        itemId: 'load',
+        padding: '0,0'
     },{
-        icon: '../resources/images/bt0108.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_15.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         tooltip: 'Save (Ctrl+S)',
-        itemId: 'save'
+        itemId: 'save',
+        padding: '0,0'
     },{
-        icon: '../resources/images/bt0109.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_17.png',
+        scale: 'large',
+        cls: 'my-btn-icon',
         tooltip: 'Find...(Ctrl+Alt+F)',
-        itemId: 'find'
+        itemId: 'find',
+        padding: '0,0'
     }
     ]
 

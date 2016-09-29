@@ -7,51 +7,68 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
     alias: 'widget.westtoolbarsub02',
     cls: 'westtoobar',
     items: [{
-        icon: '../resources/images/bt0201.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_2.png',
+        cls: 'my-btn-icon',
         tooltip: 'Execution Plan (Ctrl+Alt+P)',
         itemId: 'plan',
-        //handler: planExecute
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0202.png',
-        cls: 'x-btn-icon',
-        tooltip: 'Button 2'
+        icon: '../resources/images/liteplus_icon_4.png',
+        cls: 'my-btn-icon',
+        tooltip: 'Button 2',
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0203.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_6.png',
+        cls: 'my-btn-icon',
         tooltip: 'Column Align Format', // format기능으로 대치함
         itemId: 'format',
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0204.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_8.png',
+        cls: 'my-btn-icon',
         itemId: 'tableinfo',
-        tooltip: 'Describe Table/View (ALT+F5)'
+        tooltip: 'Describe Table/View (ALT+F5)',
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0205.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_10.png',
+        cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 2'
+        tooltip: 'Button 2',
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0206.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_12.png',
+        cls: 'my-btn-icon',
         disabled: true,
-        tooltip: 'Button 1'
+        tooltip: 'Button 1',
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0207.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_14.png',
+        cls: 'my-btn-icon',
         tooltip: 'Insert From File',
-        itemId: 'insert'
+        itemId: 'insert',
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0208.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_16.png',
+        cls: 'my-btn-icon',
         tooltip: 'Save As...',
-        itemId: 'saveas'
+        itemId: 'saveas',
+        padding: '0,0',
+        scale: 'large'
     },{
-        icon: '../resources/images/bt0209.png',
-        cls: 'x-btn-icon',
+        icon: '../resources/images/liteplus_icon_2.png',
+        cls: 'my-btn-icon',
         disabled: true,
         tooltip: 'Change Connection...',
-        itemId: 'connection'
+        itemId: 'connection',
+        padding: '0,0',
+        scale: 'large'
     }
     ]
 });

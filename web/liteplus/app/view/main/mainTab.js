@@ -10,8 +10,9 @@ Ext.define('Plus.view.main.mainTab', {
     extend: 'Ext.tab.Panel',
     alias: 'widget.mainTab',
     name: 'mainTab',
+    cls: 'maintab',
     requires: [
-        'Plus.view.main.Query',
+        'Plus.view.main.Query'
         //'Plus.view.main.Desc'
     ],
 

@@ -9,6 +9,7 @@ Ext.define('Plus.view.bottom.GridResult', {
 
     title: 'Result',
     name: 'gridsqlqueryresult',
+    cls: 'gitdresulttab',
 
     initComponent: function(){
         //this.store = 'Query';

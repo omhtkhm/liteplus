@@ -10,7 +10,7 @@ Ext.require('Plus.view.bottom.ResultBar');
 Ext.define('Plus.view.bottom.TabPanel', {
     extend: 'Ext.tab.Panel',
     alias: 'widget.sqltabpanel',
-
+    cls: 'resulttab',
     name: 'sqltabpanel',
     //bodyStyle: '',
     //autoScroll: true,
