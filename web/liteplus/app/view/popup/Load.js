@@ -32,6 +32,7 @@ Ext.define('Plus.view.popup.Load', {
                         {
                             if(el.getKey() == Ext.EventObject.ENTER)
                             {
+                                el.stopEvent();
                                 Ext.ComponentQuery.query('#popload')[0].fireEvent('click'); //팝업버튼을 찾아서 click이벤트 발생
                             }
                         }
