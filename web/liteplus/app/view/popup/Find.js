@@ -36,23 +36,6 @@ Ext.define('Plus.view.popup.Find', {
                         msgTarget: 'side',
                         store: this.tempStore
                     },
-                    //{
-                    //    xtype: 'radiogroup',
-                    //    columns: 2,
-                    //    name: 'finddirection',
-                    //    fieldLabel: 'Direction',
-                    //    //vertical: true,
-                    //    items: [{
-                    //        name: 'finddirection',
-                    //        boxLabel: 'Forward',
-                    //        inputValue: 'forward',
-                    //        checked: true
-                    //    },{
-                    //        name: 'finddirection',
-                    //        boxLabel: 'Backward',
-                    //        inputValue: 'backward'
-                    //    }]
-                    //},
                     {
                         xtype: 'radiofield',
                         name: 'finddirection',
@@ -87,7 +70,19 @@ Ext.define('Plus.view.popup.Find', {
                         hideEmptyLabel: false,
                         boxLabel: 'Match Whole Word'
                     }
-                ]
+                ],
+                defaults:{
+                    enableKeyEvents:true,
+                    listeners:{
+                        specialKey: function(field, el)
+                        {
+                            if(el.getKey() == Ext.EventObject.ENTER)
+                            {
+                                Ext.ComponentQuery.query('#popfind')[0].fireEvent('click'); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
+                            }
+                        }
+                    }
+                }
             });
 
         this.buttons = [

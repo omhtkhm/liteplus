@@ -23,7 +23,19 @@ Ext.define('Plus.view.popup.Save', {
                         msgTarget: 'side',
                         margin: '10 10 10 10'
                     }
-                ]
+                ],
+            defaults:{
+            enableKeyEvents:true,
+                listeners:{
+                specialKey: function(field, el)
+                {
+                    if(el.getKey() == Ext.EventObject.ENTER)
+                    {
+                        Ext.ComponentQuery.query('#popsave')[0].fireEvent('click'); //팝업버튼을 찾아서 click이벤트 발생
+                    }
+                }
+            }
+        }
             }
         ];
 
