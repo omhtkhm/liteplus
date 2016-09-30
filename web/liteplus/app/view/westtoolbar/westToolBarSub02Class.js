@@ -62,7 +62,7 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
         padding: '0,0',
         scale: 'large'
     },{
-        icon: '../resources/images/liteplus_icon_2.png',
+        icon: '../resources/images/liteplus_icon_18.png',
         cls: 'my-btn-icon',
         disabled: true,
         tooltip: 'Change Connection...',
