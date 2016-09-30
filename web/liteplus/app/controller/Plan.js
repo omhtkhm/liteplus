@@ -23,14 +23,14 @@ Ext.define('Plus.controller.Plan',{
     onPlanClick: function(button, e, eOpts){
         console.log('실행 button click');
         var me = this;
-        var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-        var selectedText = Plus.app.getController('Query').getSelectedText(sqltextaray); //선택된값을 가져온다.
+        var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var selectedText = Plus.app.getController('Query').getSelectedText(sqltextarea); //선택된값을 가져온다.
         //console.log('selected Text: '+selectedText);
         var sqltext ;
         if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
             sqltext = selectedText;
         } else {   // 선택된 것이 없으면, SQL 자동 선택
-            sqltext = Plus.app.getController('Format').getAutoLinesSelection(sqltextaray);
+            sqltext = Plus.app.getController('Format').getAutoLinesSelection(sqltextarea);
         }
         console.log('sqltext: '+sqltext);
 
@@ -54,14 +54,10 @@ Ext.define('Plus.controller.Plan',{
         var success = jsonResult.success;
         var jsonResultSet = jsonResult.root;
         console.log(success);
-
+        console.log(jsonResult);
         treegridPlan.reconfigure(this.createTreeStore(jsonResultSet));
 
-        if(success) {
-            //queryResultLabel.setText("First Rows Retrieved In " + firstRowTime + " seconds");
-        } else {
-            //queryResultLabel.setText(firstRowTime);
-        }
+        this.treeinfoarray = jsonResult.resultsetdetailinfo;
     },
 
     createTreeStore : function (json) {  // json에 tree json객체의 배열이 들어감

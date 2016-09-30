@@ -30,6 +30,7 @@ public class Plan {
 
         StringBuffer aInfo = new StringBuffer("");
         JsonObject cInfo = new JsonObject(); // {}
+        String bInfo = null;
 //        aInfo = new StringBuffer("{");
 //        aInfo.append( "\"result\": \"success\",");
 //        aInfo.append( "\"messageType\": \"plan\",");
@@ -93,11 +94,11 @@ public class Plan {
             PreparedStatement statement = connection.prepareStatement(strPlan);
             statement.executeQuery();  // Explain Plan for ~~ 실행
             // id, owner, table, type 가져오기. 가져온 값은 JSON의 detailinfo에 넣는다. { detailinfo: [{ID: '0' , OWNER: 'SCOTT' , OBJECT_NAME: 'TABLE', OBJECT_TYPE: 'TABLE'},{ID: '2' , OWNER: 'SCOTT' , OBJECT_NAME: 'TABLE', OBJECT_TYPE: 'TABLE'}] }
-            String strPlanTableDetail = "select ID, OBJECT_OWNER, OBJECT_TYPE, OBJECT_TYPE from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
+            String strPlanTableDetail = "select ID, OBJECT_OWNER, OBJECT_NAME, OBJECT_TYPE from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
             ResultSetToJsonObject rstojson = new ResultSetToJsonObject();
             rs = rstojson.processSQL(connection, strPlanTableDetail);
             rstojson.processResultSet(rs, cInfo, "resultsetdetailinfo"); //aInfo에 json 리절트셋 추가, {"resultsetdetailinfo": [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]}
-//            String strDetailInfo = cInfo.toString();
+            String strDetailInfo = cInfo.toString();
 //            Log.debug(strDetailInfo);
             //
             String strLeafCheck = "select PARENT_ID from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
@@ -122,6 +123,7 @@ public class Plan {
 
             aInfo.append("\"success\": true,"); //{"success":true}
             aInfo.append("\"messageType\": \"plan\",");
+            aInfo.append(strDetailInfo.substring(1,strDetailInfo.length()-1)+",");
 
             // root노드를 만들어 주려고 추가함
             aInfo.append("\"root\" : ");
@@ -192,9 +194,13 @@ public class Plan {
                     Log.debug("]");
                 }
             }
+
+            bInfo = aInfo.toString();
         }
         catch (SQLException e){
             e.printStackTrace();
+            JsonObject eInfo = sqlExceptionToJson(e);
+            bInfo = eInfo.toString();
             Log.debug(e.getMessage());
         }catch (Exception e){
             e.printStackTrace();
@@ -204,10 +210,15 @@ public class Plan {
             if (statement != null) try { statement.close(); } catch(SQLException ex) {}
             if (connection != null) try { connection.close(); } catch(SQLException ex) {}
         }
-        String bInfo = aInfo.toString();
-        JsonObject o = new JsonParser().parse(bInfo).getAsJsonObject();
-        // o와 bInfo 2개를 합쳐야 한다.
         Log.debug(bInfo);
         return bInfo;
+    }
+
+    public JsonObject sqlExceptionToJson(SQLException e) {
+        JsonObject aInfo = new JsonObject();
+        aInfo.addProperty("success", false); //{"success":true}
+        aInfo.addProperty("messageType", "popup"); //{"success":true}
+        aInfo.addProperty("errormessage", e.getMessage( )); //{"success":true}
+        return aInfo;
     }
 }

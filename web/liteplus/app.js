@@ -24,7 +24,8 @@ Ext.application({
         'Desc',
         'Format',
         'Merge',
-        'SaveOpen'
+        'SaveOpen',
+        'PlanTree'
     ],
     //autoCreateViewport: true,
 

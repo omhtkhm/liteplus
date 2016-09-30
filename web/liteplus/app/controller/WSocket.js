@@ -34,27 +34,35 @@ Ext.define('Plus.controller.WSocket', {
 
     messageHandler : function(message){
         var jsonResult = Ext.JSON.decode(message);
-        var messageType = jsonResult.messageType;
-        //var messageType = 'query';
-        switch(messageType){
-            case 'query' :
-                Plus.app.getController('Query').onResult(message);
-                break;
-            case 'plan' :
-            Plus.app.getController('Plan').onResult(message);
-            break;
-            case 'tableinfo' :
-                Plus.app.getController('Desc').onResult(message);
-                break;
-            case 'format' :
-                Plus.app.getController('Format').onResult(message);
-                break;
-            case 'merge' :
-                Plus.app.getController('Merge').onResult(message);
-                break;
-            default :{
-                console.log('Not Expected MessageType received');
+        var success = jsonResult.success;
+        if(success){  // 성공적을 처리 되었으면
+            var messageType = jsonResult.messageType;
+            switch (messageType) {
+                case 'query' :
+                    Plus.app.getController('Query').onResult(message);
+                    break;
+                case 'plan' :
+                    Plus.app.getController('Plan').onResult(message);
+                    break;
+                case 'tableinfo' :
+                    Plus.app.getController('Desc').onResult(message);
+                    break;
+                case 'format' :
+                    Plus.app.getController('Format').onResult(message);
+                    break;
+                case 'merge' :
+                    Plus.app.getController('Merge').onResult(message);
+                    break;
+                default :
+                {
+                    console.log('Not Expected MessageType received');
+                }
             }
+        } else {
+            var errormessage = jsonResult.errormessage;
+            Ext.MessageBox.alert('LitePlus', errormessage, function(){
+                return true;
+            });
         }
     }
 
