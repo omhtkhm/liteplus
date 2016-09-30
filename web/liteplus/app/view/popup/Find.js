@@ -78,6 +78,8 @@ Ext.define('Plus.view.popup.Find', {
                         {
                             if(el.getKey() == Ext.EventObject.ENTER)
                             {
+                                //el.stopPropagation();
+                                el.stopEvent();
                                 Ext.ComponentQuery.query('#popfind')[0].fireEvent('click'); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
                             }
                         }
