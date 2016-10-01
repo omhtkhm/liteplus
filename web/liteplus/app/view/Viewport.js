@@ -14,15 +14,17 @@ Ext.define('Plus.view.Viewport',{
         region: 'north',
         layout: 'hbox',
         height: 80,
-        //margin: '0 0 0 0',
+        margin: '3 3 3 3',
+        border: false,
         items: [{
-            //xtype: 'image',
-            //src: '../resources/images/LitePlus_logo.png'
+            xtype: 'label',
             html: '<img src="../resources/images/LitePlus_logo.png" width="141" height="86" />',
-            border: 0
+            border: false,
+            bodyStyle: 'margin: 0px 0px; padding: 0px 0px;'
         },{
             xtype: 'topMenu',
-            border: 0
+            border: false,
+            margin: '0 0 0 0'
         }]
     }, {
         region: 'center',

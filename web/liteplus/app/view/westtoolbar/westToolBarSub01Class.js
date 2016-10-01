@@ -69,7 +69,7 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
         icon: '../resources/images/liteplus_icon_15.png',
         scale: 'large',
         cls: 'my-btn-icon',
-        tooltip: 'Save (Ctrl+S)',
+        tooltip: 'Save (Ctrl+Alt+S)',
         itemId: 'save',
         padding: '0,0'
     },{

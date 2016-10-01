@@ -42,6 +42,7 @@ Ext.define('Plus.controller.SaveOpen',{
         if(!this.filename) { // 파일명을 저장했으면
             this.savepopup = Ext.create('Plus.view.popup.Save');
             this.savepopup.show();
+            Ext.ComponentQuery.query('textfield[name=savename]')[0].focus();
         } else {  // 세션에서 파일명을 한번이라도 지정했으면
             this.localStorageSave();
         }
@@ -49,6 +50,8 @@ Ext.define('Plus.controller.SaveOpen',{
 
     localStorageSave: function(){
         console.log('Local Storage pop save clicked!');
+        var form = Ext.ComponentQuery.query('form[name=saveform]')[0];
+        if(!form.isValid()) return false; // 빈칸 validation check
         //sessionStorage.setItem('isFileName', 'true'); //세션스토리지에 파일명이 저장되었음을 flag함
         var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var savetext = sqltextaray.getValue();
@@ -69,6 +72,7 @@ Ext.define('Plus.controller.SaveOpen',{
         this.savepopup = Ext.create('Plus.view.popup.Save');
         this.saveas = true;
         this.savepopup.show();
+        Ext.ComponentQuery.query('textfield[name=savename]')[0].focus();
     },
 
     onLoadClick: function(){
@@ -81,10 +85,13 @@ Ext.define('Plus.controller.SaveOpen',{
         //this.loadpopup.items.items.value = this.filename;
         console.log(this.loadpopup.items.items);
         this.loadpopup.show();
+        Ext.ComponentQuery.query('textfield[name=loadname]')[0].focus();
     },
 
     localStorageLoad: function(){
         console.log('Local Storage pop load clicked!');
+        var form = Ext.ComponentQuery.query('form[name=loadform]')[0];
+        if(!form.isValid()) return false; // 빈칸 validation check
         var filenamefield= Ext.ComponentQuery.query('textfield[name=loadname]')[0];
         var filename = filenamefield.getValue();
         this.loadpopup.close();
@@ -103,6 +110,7 @@ Ext.define('Plus.controller.SaveOpen',{
         this.loadpopup = Ext.create('Plus.view.popup.Load');
         this.insert = true; // insert인지 아니면 바꿔치기인지 선택
         this.loadpopup.show();
+        Ext.ComponentQuery.query('textfield[name=loadname]')[0].focus();
     },
 
     onFindClick: function(){
@@ -116,11 +124,13 @@ Ext.define('Plus.controller.SaveOpen',{
             whole: this.whole
     });
         this.findpopup.show(); //textfield focus
-        Ext.ComponentQuery.query('combobox[name=findname]')[0].focus(); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
+        Ext.ComponentQuery.query('combobox[name=findname]')[0].focus();
     },
 
     findText: function(){
         console.log('pop find clicked!');
+        var form = Ext.ComponentQuery.query('form[name=findform]')[0];
+        if(!form.isValid()) return false; // 빈칸 validation check
         var findnamefield= Ext.ComponentQuery.query('textfield[name=findname]')[0];
         this.findname = findnamefield.getValue();
         // 정방향인지 역방향인지

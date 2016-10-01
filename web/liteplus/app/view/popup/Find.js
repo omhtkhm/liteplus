@@ -38,6 +38,7 @@ Ext.define('Plus.view.popup.Find', {
         this.items =
             Ext.create('Ext.form.Panel', {
                 //xtype: 'form',
+                name: 'findform',
                 fieldDefaults:{
                     margin: '10 10 10 10'
                 },

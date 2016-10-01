@@ -7,7 +7,6 @@ Ext.define('Plus.view.toptoolbar.topMenuClass', {
     cls: 'toptoolbar',
     height: 80,
     flex: 1,
-    //margin: '0,0',
     initComponent: function() {
         this.items = [{
             xtype: 'label',
