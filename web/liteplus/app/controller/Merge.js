@@ -19,12 +19,26 @@ Ext.define('Plus.controller.Merge',{
 
     onMergeClick: function(button, e, eOpts){
         console.log('Merge button click');
-        var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-        var tablename = this.getTableFromLine(sqltextaray); //테이블명을 뽑음
-        this.viewname = tablename;
-        var sqltext = tablename.toUpperCase(); //테이블명
-        this.tablename = sqltext;
+        //var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        //var tablename = this.getTableFromLine(sqltextaray); //테이블명을 뽑음
+        //var sqltext = tablename.toUpperCase(); //테이블명
+        //this.tablename = sqltext;
+        var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var sqlController = Plus.app.getController('Query');
+        var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
+        var tablename;
+        if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
+            tablename = selectedText;
+            $(sqltextarea.inputEl.dom).setSelection(sqlController.input.selectionStart, sqlController.input.selectionEnd) //현재 선택을 유지한다
+        } else {   // 선택된 것이 없으면, SQL 자동 선택
+            var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
+            tablename = this.getTableFromLine(sqltextarea);
+            $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
+        }
         console.log('View name:'+sqltext);
+        this.viewname = tablename;
+        var sqltext = tablename; //테이블명
+        //this.tablename = sqltext.toUpperCase(); // 메시지 수신 시, 탭명으로 활용 예정
 
         // 웹소켓으로 SQL문 메시지를 보낸다
         var clientMessage = new Object();

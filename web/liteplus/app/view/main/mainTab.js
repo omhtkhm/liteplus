@@ -13,14 +13,9 @@ Ext.define('Plus.view.main.mainTab', {
     cls: 'maintab',
     requires: [
         'Plus.view.main.Query'
-        //'Plus.view.main.Desc'
     ],
-
-    //bodyStyle: '',
-    //autoScroll: true,
     activeTab: 0,
     items: [
-        {xtype: 'query', closable: true},
-        //{xtype: 'desc'}
+        {xtype: 'query', closable: true}
     ]
 });

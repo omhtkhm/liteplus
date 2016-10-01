@@ -27,13 +27,14 @@ public class Merge {
             InitialContext ctx = new InitialContext();
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/DSTest");
             connection = ds.getConnection();
+            message = message.toUpperCase();
             if(message.contains(".")){ //owner와 같이 받았으면
                 String[] strOwnerTable = message.split("\\."); // ower, view명이 넘어와야 함, SCOTT.EMP 또는 EMP
                 strOwner = strOwnerTable[0];
                 strTable = strOwnerTable[1];
             }else {   //뷰명만 받았으면
-                strTable = message;
                 strOwner = GetOwnerFromView();
+                strTable = message;
             }
             Log.debug("Owner : " + strOwner);
             Log.debug("Table : " + strTable);

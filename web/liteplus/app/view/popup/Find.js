@@ -4,7 +4,7 @@
 Ext.define('Plus.view.popup.Find', {
     extend: 'Ext.window.Window',
     alias : 'widget.find',
-
+    name : 'find',
     title : 'Find',
     layout: 'fit',
     autoShow: true,
@@ -15,15 +15,31 @@ Ext.define('Plus.view.popup.Find', {
     forward: true,
     casesensitive: false,
     whole: false,
+    listeners: {
+        afterrender: function () {
+            var me = this;
+            var keyMap = me.getKeyMap();
+            keyMap.on(13, me.onEnter, me);
+            keyMap.on(27, me.onEsc, me);
+        }
+    },
+
+    onEnter: function (k, e) {
+        //alert('enter');
+        e.stopEvent();
+        Ext.ComponentQuery.query('#popfind')[0].fireEvent('click'); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
+    },
+
+    onEsc: function (k, e) {
+        e.stopEvent();
+        Ext.ComponentQuery.query('find[name=find]')[0].close(); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
+    },
     initComponent: function() {
         this.items =
             Ext.create('Ext.form.Panel', {
                 //xtype: 'form',
                 fieldDefaults:{
                     margin: '10 10 10 10'
-                    //labelAlign: 'left',
-                    //labelWidth: 90,
-                    //anchor: '100%'
                 },
                 items: [
                     {
@@ -34,7 +50,10 @@ Ext.define('Plus.view.popup.Find', {
                         value: this.tempText,
                         allowBlank: false,
                         msgTarget: 'side',
-                        store: this.tempStore
+                        store: this.tempStore,
+                        //triggerAction:'all',
+                        autoSelect: false,
+                        minChars: 300
                     },
                     {
                         xtype: 'radiofield',
@@ -70,20 +89,21 @@ Ext.define('Plus.view.popup.Find', {
                         hideEmptyLabel: false,
                         boxLabel: 'Match Whole Word'
                     }
-                ],
-                defaults:{
-                    enableKeyEvents:true,
-                    listeners:{
-                        specialKey: function(field, el)
-                        {
-                            if(el.getKey() == Ext.EventObject.ENTER)
-                            {
-                                el.stopEvent();
-                                Ext.ComponentQuery.query('#popfind')[0].fireEvent('click'); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
-                            }
-                        }
-                    }
-                }
+                ]
+                //,
+                //defaults:{
+                //    enableKeyEvents:true,
+                //    listeners:{
+                //        specialKey: function(field, el)
+                //        {
+                //            if(el.getKey() == Ext.EventObject.ENTER)
+                //            {
+                //                el.stopEvent();
+                //                Ext.ComponentQuery.query('#popfind')[0].fireEvent('click'); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
+                //            }
+                //        }
+                //    }
+                //}
             });
 
         this.buttons = [

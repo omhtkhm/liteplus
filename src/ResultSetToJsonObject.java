@@ -34,6 +34,14 @@ public class ResultSetToJsonObject {
         rs = statement.executeQuery();
         return rs;
     }
+
+//    public JsonObject sqlExceptionToJson(SQLException e) {
+//        JsonObject aInfo = new JsonObject();
+//        aInfo.addProperty("success", false); //{"success":true}
+//        aInfo.addProperty("messageType", "popup"); //{"success":true}
+//        aInfo.addProperty("errormessage", e.getMessage( )); //{"success":true}
+//        return aInfo;
+//    }
 //    public JsonObject processSQLtoJson(Connection connection, String sql, JsonObject aInfo, String strKey) throws SQLException{
 //        System.out.println("sql : " + sql);
 //        Log.debug("sql : " + sql);

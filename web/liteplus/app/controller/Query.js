@@ -80,15 +80,18 @@ Ext.define('Plus.controller.Query',{
     onQueryClick: function(button, e, eOpts){
         console.log('Query Button clicked');
 
-        var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-        var selectedText = this.getSelectedText(sqltextaray); //선택된값을 가져온다.
+        var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var selectedText = this.getSelectedText(sqltextarea); //선택된값을 가져온다.
         //console.log('selected Text: '+selectedText);
 
         var sqltext ;
         if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
             sqltext = selectedText;
+            $(sqltextarea.inputEl.dom).setSelection(this.input.selectionStart, this.input.selectionEnd) //현재 선택을 유지한다
         } else {   // 선택된 것이 없으면, SQL 자동 선택
-            sqltext = Plus.app.getController('Format').getAutoLinesSelection(sqltextaray);
+            var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
+            sqltext = Plus.app.getController('Format').getAutoLinesSelection(sqltextarea);
+            $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
         }
         console.log('sqltext: '+sqltext);
 
@@ -135,12 +138,12 @@ Ext.define('Plus.controller.Query',{
     // Textarea에서 셀렉션값 가져오는 함수
     getSelectedText: function(inputTextArea){
         var selectedText;
-        var input = inputTextArea.inputEl.dom;
+        this.input = inputTextArea.inputEl.dom;
         if (document.selection && document.selection.createRange) {  // IE브라우저
-            input.selection = document.selection.createRange();
-            selectedText = input.selection.text;
-        } else if (typeof input.selectionStart === 'number') {    // IE가 아닌 브라우저
-            selectedText = input.value.substring(input.selectionStart, input.selectionEnd);
+            this.input.selection = document.selection.createRange();
+            selectedText = this.input.selection.text;
+        } else if (typeof this.input.selectionStart === 'number') {    // IE가 아닌 브라우저
+            selectedText = this.input.value.substring(this.input.selectionStart, this.input.selectionEnd);
         }
         return selectedText;
     },

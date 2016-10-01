@@ -21,10 +21,24 @@ Ext.define('Plus.controller.Desc',{
 
     onTableInfoClick: function(button, e, eOpts){
         console.log('TableInfo button click');
-        var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-        var tablename = this.getTableFromLine(sqltextaray); //테이블명을 뽑음
-        var sqltext = tablename.toUpperCase(); //테이블명
-        this.tablename = sqltext;
+        //var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        //var tablename = this.getTableFromLine(sqltextarea); //테이블명을 뽑음
+        var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var sqlController = Plus.app.getController('Query');
+        var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
+        var tablename;
+        if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
+            tablename = selectedText;
+            $(sqltextarea.inputEl.dom).setSelection(sqlController.input.selectionStart, sqlController.input.selectionEnd) //현재 선택을 유지한다
+        } else {   // 선택된 것이 없으면, SQL 자동 선택
+            var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
+            tablename = this.getTableFromLine(sqltextarea);
+            $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
+        }
+        console.log('table name: '+sqltext);
+        var sqltext = tablename; //테이블명
+        this.tablename = sqltext.toUpperCase(); // 메시지 수신 시, 탭명으로 활용 예정
+
         //var tabs = Ext.ComponentQuery.query('mainTab[name=mainTab]')[0];
         ////var items = tabs.items.items;  // 탭패널의 아이템들 중 items라는 항목을 찾는다
         ////tabs.setActiveTab(items[1].id);  // items의 첫번째 항목 중 id 값을 가지고 탭을 활성화 시킨다
@@ -102,7 +116,11 @@ Ext.define('Plus.controller.Desc',{
             ddlinfo.setValue(jsonResultSetDDLInfo[0].DDL);
         } else {   // success가 false인경우
             var errorMsg = jsonResult.errormessage;
-            Ext.Msg.alert('LitePlus', errorMsg);
+            Ext.Msg.alert('LitePlus', errorMsg, function (btn) {
+                if (btn == 'ok') {
+                    Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0].focus();
+                }
+            });
         }
     },
 

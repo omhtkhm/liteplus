@@ -115,7 +115,8 @@ Ext.define('Plus.controller.SaveOpen',{
             casesensitive: this.casesensitive,
             whole: this.whole
     });
-        this.findpopup.show();
+        this.findpopup.show(); //textfield focus
+        Ext.ComponentQuery.query('combobox[name=findname]')[0].focus(); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
     },
 
     findText: function(){
@@ -140,7 +141,7 @@ Ext.define('Plus.controller.SaveOpen',{
         var textareaText = sqltextarea.getValue();
         //sqltextarea.setValue(this.findname);
         var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
-
+        $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
         var targetText = textareaText;
         var searchText = this.findname;
         if(!this.casesensitive) { //대소문자 안가리면 대문자 변경
@@ -190,9 +191,12 @@ Ext.define('Plus.controller.SaveOpen',{
     onKeyDown: function(textarea, e, eOpts){
         if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.F)){
             console.log('Ctrl+Alt+F key down');
-            this.onFindClick();
+            e.stopEvent();
+            this.onFindClick();//바로호출
+            //Ext.ComponentQuery.query('button[name=toolbarfindbtn]')[0].fireEvent('click'); //버튼을 찾아서 click이벤트 발생.
         } else if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.S)){
             console.log('Ctrl+Alt+S key down');
+            e.stopEvent();
             this.onSaveClick();
         }
     }

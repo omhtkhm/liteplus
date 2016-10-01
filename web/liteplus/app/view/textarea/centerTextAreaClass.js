@@ -50,5 +50,9 @@ Ext.define('Plus.view.textarea.centerTextAreaClass', {
         this.handler = handler;
         this.scope = scope;
         return this;
+    },
+
+    afterRender: function() {
+        this.focus();
     }
 });

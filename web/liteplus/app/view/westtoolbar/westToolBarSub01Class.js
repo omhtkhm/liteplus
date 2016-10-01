@@ -73,6 +73,7 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
         itemId: 'save',
         padding: '0,0'
     },{
+        name: 'toolbarfindbtn',
         icon: '../resources/images/liteplus_icon_17.png',
         scale: 'large',
         cls: 'my-btn-icon',

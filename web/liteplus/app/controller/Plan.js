@@ -22,15 +22,18 @@ Ext.define('Plus.controller.Plan',{
 
     onPlanClick: function(button, e, eOpts){
         console.log('실행 button click');
-        var me = this;
         var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-        var selectedText = Plus.app.getController('Query').getSelectedText(sqltextarea); //선택된값을 가져온다.
+        var sqlController = Plus.app.getController('Query');
+        var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
         //console.log('selected Text: '+selectedText);
         var sqltext ;
         if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
             sqltext = selectedText;
+            $(sqltextarea.inputEl.dom).setSelection(sqlController.input.selectionStart, sqlController.input.selectionEnd) //현재 선택을 유지한다
         } else {   // 선택된 것이 없으면, SQL 자동 선택
+            var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
             sqltext = Plus.app.getController('Format').getAutoLinesSelection(sqltextarea);
+            $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
         }
         console.log('sqltext: '+sqltext);
 
@@ -50,14 +53,21 @@ Ext.define('Plus.controller.Plan',{
     onResult : function(message) {
         var treegridPlan = Ext.ComponentQuery.query('planresult[name=treegridplanresult]')[0];
         var jsonResult = Ext.JSON.decode(message);
-
         var success = jsonResult.success;
-        var jsonResultSet = jsonResult.root;
         console.log(success);
         console.log(jsonResult);
-        treegridPlan.reconfigure(this.createTreeStore(jsonResultSet));
-
-        this.treeinfoarray = jsonResult.resultsetdetailinfo;
+        if (success) {
+            var jsonResultSet = jsonResult.root;
+            treegridPlan.reconfigure(this.createTreeStore(jsonResultSet));
+            this.treeinfoarray = jsonResult.resultsetdetailinfo;
+        } else {   // success == false
+            var errormessage = jsonResult.errormessage;
+            Ext.MessageBox.alert('LitePlus', errormessage, function (btn) {
+                if (btn == 'ok') {
+                    Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0].focus();
+                }
+            });
+        }
     },
 
     createTreeStore : function (json) {  // json에 tree json객체의 배열이 들어감

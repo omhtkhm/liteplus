@@ -24,13 +24,14 @@ public class TableInfo {
             InitialContext ctx = new InitialContext();
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/DSTest");
             connection = ds.getConnection();
+            message = message.toUpperCase();
             if(message.contains(".")){ //owner와 같이 받았으면
                 String[] strOwnerTable = message.split("\\."); // ower, table명이 넘어와야 함, SCOTT.EMP 또는 EMP
                 strOwner = strOwnerTable[0];
                 strTable = strOwnerTable[1];
             }else {   //테이블명만 받았으면
-                strTable = message;
                 strOwner = GetOwnerFromTable();
+                strTable = message;
             }
             Log.debug("Owner : " + strOwner);
             Log.debug("Table : " + strTable);
