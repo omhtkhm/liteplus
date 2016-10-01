@@ -190,8 +190,9 @@ Ext.define('Plus.controller.Desc',{
     },
 
     onKeyDown: function(textarea, e, eOpts){
-        if(e.getCharCode()== (Ext.EventObject.ALT && Ext.EventObject.F5)){
-            console.log('F5 key down');
+        //if(e.getCharCode()== (Ext.EventObject.ALT && Ext.EventObject.F5)){
+        if(e.altKey && (e.getCharCode() == Ext.EventObject.F5)){
+            console.log('Alt+F5 key down');
             this.onTableInfoClick();
         }
     },

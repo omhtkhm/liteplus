@@ -104,4 +104,17 @@ jQuery.fn.extend({
             }
         })
     },
-})
+    //getXYFromIndex: function(textareaEl, index){
+    //    var textLines = textareaEl.value.substr(0, textareaEl.selectionStart).split("\n");
+    //    var currentLineNumber = textLines.length;
+    //    var currentColumnIndex = textLines[textLines.length-1].length+1;
+    //    var nLineCol = new Object();
+    //    nLineCol.line = currentLineNumber;
+    //    nLineCol.col = currentColumnIndex;
+    //    return nLineCol;
+    //},
+    //getLineNumber : function(){
+    //    var el = $(this).get(0);
+    //    return el.value.substr(0, el.selectionStart).split("\n").length;
+    //}
+});

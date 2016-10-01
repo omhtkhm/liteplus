@@ -77,7 +77,7 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
         icon: '../resources/images/liteplus_icon_17.png',
         scale: 'large',
         cls: 'my-btn-icon',
-        tooltip: 'Find...(Ctrl+Alt+F)',
+        tooltip: 'Find...(Ctrl+Alt+F, Ctrl+Alt+G or D)',
         itemId: 'find',
         padding: '0,0'
     }

@@ -30,8 +30,8 @@ public class TableInfo {
                 strOwner = strOwnerTable[0];
                 strTable = strOwnerTable[1];
             }else {   //테이블명만 받았으면
-                strOwner = GetOwnerFromTable();
                 strTable = message;
+                strOwner = GetOwnerFromTable();
             }
             Log.debug("Owner : " + strOwner);
             Log.debug("Table : " + strTable);

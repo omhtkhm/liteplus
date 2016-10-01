@@ -86,12 +86,10 @@ Ext.define('Plus.controller.Merge',{
         var success = jsonResult.success;
         var jsonResultSet = jsonResult.resultsetmerge;
         console.log(success);
-
-        //sqltextarea.setValue(jsonResultSet);
-        var textareael = sqltextarea.inputEl.dom;
-
+        var textareaEl = sqltextarea.inputEl.dom;
         console.log(jsonResultSet[0].TEXT);
-        $(textareael).insertAtCursor('( '+jsonResultSet[0].TEXT+' ) '+'/*'+this.viewname+'*/');
+        this.getTableFromLine(sqltextarea); //테이블명을 selection해야 정확히 그 위치에 삽입이 됨
+        $(textareaEl).insertAtCursor('( '+jsonResultSet[0].TEXT+' ) '+'/*'+this.viewname+'*/');
     },
 
     selectTextareaObject : function (tarea,nRow,startidx,endidx) {

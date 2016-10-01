@@ -33,8 +33,8 @@ public class Merge {
                 strOwner = strOwnerTable[0];
                 strTable = strOwnerTable[1];
             }else {   //뷰명만 받았으면
-                strOwner = GetOwnerFromView();
                 strTable = message;
+                strOwner = GetOwnerFromView();
             }
             Log.debug("Owner : " + strOwner);
             Log.debug("Table : " + strTable);

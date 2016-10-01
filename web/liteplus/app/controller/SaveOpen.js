@@ -167,6 +167,49 @@ Ext.define('Plus.controller.SaveOpen',{
             var endIndex = startIndex + this.findname.length;
 
             $(sqltextarea.inputEl.dom).setSelection(startIndex, endIndex);
+            console.log(startIndex);
+            $(sqltextarea.inputEl.dom).scrollTop(startIndex-200);
+
+            queryResultLabel.setText('Ready');
+        } else{ //찾는 문자가 없는 경우
+            queryResultLabel.setText('String Not Found');
+        }
+    },
+
+    findTextFromShortKey: function(){
+        var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var textareaText = sqltextarea.getValue();
+        //sqltextarea.setValue(this.findname);
+        var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
+        $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
+        var targetText = textareaText;
+        var searchText = this.findname;
+        if(!this.casesensitive) { //대소문자 안가리면 대문자 변경
+            targetText = textareaText.toUpperCase();
+            searchText = this.findname.toUpperCase()
+        }
+        if(this.whole) { //단어가 같아야 되면
+            searchText = ' '+searchText+' ';
+        }
+        var startIndex;
+        if(this.forward) { //정방향
+            var searchfrom = currentPos+1;
+            console.log(searchfrom);
+            var startIndex = targetText.indexOf(searchText, searchfrom);
+        } else{ //역방향 검샘
+            var searchfrom = currentPos-1;
+            console.log(searchfrom);
+            var startIndex = targetText.lastIndexOf(searchText, searchfrom);
+        }
+        var queryResultLabel = Ext.ComponentQuery.query('label[name=queryresultlabelname]')[0];
+        if(startIndex != -1) { // 찾는 문자가 있는 경우,
+            if(this.whole) startIndex = startIndex +1; //단어가 같아야 되면 공백을 포함하였으므로
+            var endIndex = startIndex + this.findname.length;
+
+            $(sqltextarea.inputEl.dom).setSelection(startIndex, endIndex);
+            console.log(startIndex);
+            $(sqltextarea.inputEl.dom).scrollTop(startIndex-200);
+
             queryResultLabel.setText('Ready');
         } else{ //찾는 문자가 없는 경우
             queryResultLabel.setText('String Not Found');
@@ -198,6 +241,16 @@ Ext.define('Plus.controller.SaveOpen',{
             console.log('Ctrl+Alt+S key down');
             e.stopEvent();
             this.onSaveClick();
+        }else if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.D)){  // 역방향 탐색
+            console.log('Ctrl+Alt+D key down');
+            e.stopEvent();
+            this.forward = false;
+            this.findTextFromShortKey();//바로호출
+        }else if(e.ctrlKey && e.altKey && (e.getCharCode() == Ext.EventObject.G)){   //정방향 탐색
+            console.log('Ctrl+Alt+G key down');
+            e.stopEvent();
+            this.forward = true;
+            this.findTextFromShortKey();//바로호출
         }
     }
 });
