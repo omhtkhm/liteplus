@@ -1,5 +1,6 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import simpledb.EmbeddedDatabase;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -25,9 +26,8 @@ public class Query {
             // Here we lookup the datasource with the name
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/DSTest");
             Connection connection = ds.getConnection();
-
             PreparedStatement statement = connection.prepareStatement(strModifiedSQLText);
-
+            EmbeddedDatabase.insertSqlHist(message);//Query Embbeded Derby DB에 저장
             //실행시간 측정
             long start = System.currentTimeMillis(); // 실행시간 측정 용
             ResultSet rs = statement.executeQuery();

@@ -51,6 +51,9 @@ Ext.define('Plus.controller.WSocket', {
                 case 'merge' :
                     Plus.app.getController('Merge').onResult(message);
                     break;
+                case 'history' :
+                    Plus.app.getController('History').onResult(message);
+                    break;
                 //case 'popup' :
                 //    this.popupMessage(jsonResult);
                 //    break;

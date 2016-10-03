@@ -63,13 +63,13 @@ Ext.define('Plus.controller.Format',{
         }
     },
 
-    getAutoLinesSelection: function(sqltextaray) {
+    getAutoLinesSelection: function(sqltextarea) {
         // 셀렉션이 없으면 커서위치로 위아래의 빈줄로 나뉘어진 문장을 동적 Selection해야함. 빈줄이 없으면 전체문장으로 동적 Selection
         //커서위치 다음행+다음행...공백행이 나올때까지. 이전행+이전행+공백행이 나올때까지.
         //선택을 공백행 다음행부터 다음공백행 전까지를 선택해서 Format SQL문을 삽입한다.
-        var textarea = sqltextaray.inputEl.dom;
-        var textLines = textarea.value.substr(0, textarea.selectionStart).split("\n"); //커서까지 잘라서 각 행을 배열에 넣음
-        var textTotalLines = textarea.value.split("\n"); //전체를 각 행별로 배열에 넣음
+        var textareaEl = sqltextarea.inputEl.dom;
+        var textLines = textareaEl.value.substr(0, textareaEl.selectionStart).split("\n"); //커서까지 잘라서 각 행을 배열에 넣음
+        var textTotalLines = textareaEl.value.split("\n"); //전체를 각 행별로 배열에 넣음
         var currentLineNumber = textLines.length; //현재 행
         var totalLineNumber = textTotalLines.length; //전체 행
         var startLine=1;
@@ -107,9 +107,9 @@ Ext.define('Plus.controller.Format',{
 
         console.log('시작행:' + startLine + ',종료행:' + endLine);
         //$(textarea).setSelection(0,200);
-        this.selectTextareaLine(textarea,startLine,endLine);
+        this.selectTextareaLine(textareaEl,startLine,endLine);
         //return sqltextaray.getValue();
-        return Plus.app.getController('Query').getSelectedText(sqltextaray);
+        return Plus.app.getController('Query').getSelectedText(sqltextarea);
     },
 
     selectTextareaLine : function (tarea,startLineNum,endLineNum) {

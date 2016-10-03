@@ -4,13 +4,16 @@
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+//import simpledb.EmbeddedDatabase;
 
 import javax.websocket.OnMessage;
+//import javax.websocket.OnOpen;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/wshandler")
 public class WSHandler extends websocket {
     String replymessage;
+//    boolean isDBinitialized = false;
 
     @OnMessage
     public String handleMessage(String message){
@@ -58,6 +61,12 @@ public class WSHandler extends websocket {
                 Merge myMerge = new Merge();
                 replymessage = myMerge.handleMessage(strQueryText);
                 break;
+            case 5:     // format 메시지 인 경우,
+                Log.debug("client message Type : History");
+                History myHistory = new History();
+                String strDirection = jobject.get("direction").getAsString();
+                replymessage = myHistory.handleMessage(strQueryText,strDirection);
+                break;
             default:
                 replymessage = "There is NO proper message type included for server to process client message!";
                 break;
@@ -67,4 +76,13 @@ public class WSHandler extends websocket {
         Log.debug("send to client : "+replymessage);
         return replymessage;
     }
+
+//    @OnOpen
+//    public void handleOpen(){
+//        System.out.println("WSHandler: client is now connected...");
+////        if(!isDBinitialized){
+////            EmbeddedDatabase.initDB();
+////            isDBinitialized = true;
+////        }
+//    }
 }

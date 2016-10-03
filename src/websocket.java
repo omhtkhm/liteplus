@@ -1,3 +1,5 @@
+import simpledb.EmbeddedDatabase;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -6,12 +8,18 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/websocket")
 public class websocket {
+    static boolean isDBinitialized = false;
     /***
      * 웹 소켓이 연결되면 호출되는 이벤트
      */
     @OnOpen
     public void handleOpen(){
         System.out.println("client is now connected...");
+        if(!isDBinitialized){
+            EmbeddedDatabase.initDB();
+            System.out.println("Derby DB initialized...");
+            isDBinitialized = true;
+        }
     }
     /**
      * 웹 소켓으로부터 메시지가 오면 호출되는 이벤트

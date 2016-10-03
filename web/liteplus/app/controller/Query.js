@@ -98,11 +98,13 @@ Ext.define('Plus.controller.Query',{
         var tabs = Ext.ComponentQuery.query('sqltabpanel[name=sqltabpanel]')[0];
         var items = tabs.items.items;
         tabs.setActiveTab(items[0].id); // 쿼리결과 Tab에 위치시킨다
-        //서버에 실행할 SQL을 보내기 전에 Web Storage에 실행한 SQL을 일시,SQL문을 저장한다.
-        var strNow = this.getTimeStamp();
-        console.log('datatime: '+strNow);
-        this.sqlindex += 1;
-        $.jStorage.set('liteplus-/'+this.sqlindex, strNow+'``~'+sqltext);
+
+        //서버에 실행할 SQL을 보내기 전에 Web Storage에 실행한 SQL을 일시,SQL문을 저장한다.->서버저장으로 함
+        //var strNow = this.getTimeStamp();
+        //console.log('datatime: '+strNow);
+        //this.sqlindex += 1;
+        //$.jStorage.set('_internal|'+strNow+'#'+this.sqlindex, sqltext);
+
         // 웹소켓으로 SQL문 메시지를 보낸다
         var clientMessage = new Object();
         clientMessage.messageType = "query";
@@ -158,31 +160,31 @@ Ext.define('Plus.controller.Query',{
         nLineCol.line = currentLineNumber;
         nLineCol.col = currentColumnIndex;
         return nLineCol;
-    },
-
-    getTimeStamp : function() {
-    var d = new Date();
-
-    var s =
-        this.leadingZeros(d.getFullYear(), 4) + '-' +
-        this.leadingZeros(d.getMonth() + 1, 2) + '-' +
-        this.leadingZeros(d.getDate(), 2) + ' ' +
-
-        this.leadingZeros(d.getHours(), 2) + ':' +
-        this.leadingZeros(d.getMinutes(), 2) + ':' +
-        this.leadingZeros(d.getSeconds(), 2);
-
-    return s;
-    },
-
-    leadingZeros : function(n, digits) {
-    var zero = '';
-    n = n.toString();
-
-    if (n.length < digits) {
-        for (i = 0; i < digits - n.length; i++)
-            zero += '0';
     }
-    return zero + n;
-}
+
+    //getTimeStamp : function() {
+    //var d = new Date();
+    //
+    //var s =
+    //    this.leadingZeros(d.getFullYear(), 4) + '-' +
+    //    this.leadingZeros(d.getMonth() + 1, 2) + '-' +
+    //    this.leadingZeros(d.getDate(), 2) + ' ' +
+    //
+    //    this.leadingZeros(d.getHours(), 2) + ':' +
+    //    this.leadingZeros(d.getMinutes(), 2) + ':' +
+    //    this.leadingZeros(d.getSeconds(), 2);
+    //
+    //return s;
+    //},
+    //
+    //leadingZeros : function(n, digits) {
+    //    var zero = '';
+    //    n = n.toString();
+    //
+    //    if (n.length < digits) {
+    //        for (i = 0; i < digits - n.length; i++)
+    //            zero += '0';
+    //    }
+    //    return zero + n;
+    //}
 });

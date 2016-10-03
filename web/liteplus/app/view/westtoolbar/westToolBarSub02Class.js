@@ -36,15 +36,15 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
     },{
         icon: '../resources/images/liteplus_icon_10.png',
         cls: 'my-btn-icon',
-        disabled: true,
         tooltip: 'Get SQL From Histroy',
+        disabled: true,
         padding: '0,0',
         scale: 'large'
     },{
         icon: '../resources/images/liteplus_icon_12.png',
         cls: 'my-btn-icon',
-        disabled: true,
         tooltip: 'Next SQL (F3)',
+        itemId: 'next',
         padding: '0,0',
         scale: 'large'
     },{

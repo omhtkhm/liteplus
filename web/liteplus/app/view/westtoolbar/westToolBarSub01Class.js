@@ -55,8 +55,8 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub01Class', {
         icon: '../resources/images/liteplus_icon_11.png',
         scale: 'large',
         cls: 'my-btn-icon',
-        disabled: true,
         tooltip: 'Previous SQL (F2)',
+        itemId: 'previous',
         padding: '0,0'
     },{
         icon: '../resources/images/liteplus_icon_13.png',
