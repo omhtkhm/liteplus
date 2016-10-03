@@ -37,7 +37,6 @@ Ext.define('Plus.controller.SaveOpen',{
 
     onSaveClick: function(){
         console.log('Save button click');
-        //this.filename = '1'; // 단순 저장은 파일명을 '1'로 고정한다.
         this.saveas = false;
         if(!this.filename) { // 파일명을 저장했으면
             this.savepopup = Ext.create('Plus.view.popup.Save');
@@ -125,13 +124,19 @@ Ext.define('Plus.controller.SaveOpen',{
             forward: this.forward,
             casesensitive: this.casesensitive,
             whole: this.whole
-    });
+        });
         this.findpopup.show(); //textfield focus
         Ext.ComponentQuery.query('combobox[name=findname]')[0].focus();
     },
 
     findText: function(){
         console.log('pop find clicked!');
+        // textarea에서 선택한 내용이 있는지 우선 검사한다.
+        var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var sqlController = Plus.app.getController('Query');
+        var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
+        console.log(selectedText);
+        // 여기서 부터 find 로직 처리
         var form = Ext.ComponentQuery.query('form[name=findform]')[0];
         if(!form.isValid()) return false; // 빈칸 validation check
         var findnamefield= Ext.ComponentQuery.query('textfield[name=findname]')[0];
@@ -167,10 +172,7 @@ Ext.define('Plus.controller.SaveOpen',{
         var startIndex;
         if(this.forward) { //정방향
             var searchfrom = currentPos+1;
-            //sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-            //var sqlController = Plus.app.getController('Query');
-            //var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
-            //if(selectedText!='') searchfrom = currentPos + selectedText.length;
+            if(selectedText!='') searchfrom = currentPos + selectedText.length;
             console.log(searchfrom);
             var startIndex = targetText.indexOf(searchText, searchfrom);
         } else{ //역방향 검샘
@@ -195,7 +197,13 @@ Ext.define('Plus.controller.SaveOpen',{
 
     findTextFromShortKey: function(){
         if(!this.findname) return false;
+        // textarea에서 선택한 내용이 있는지 우선 검사한다.
         var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+        var sqlController = Plus.app.getController('Query');
+        var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
+        console.log(selectedText);
+        // 여기서부터 find logic 처리
+        //var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var textareaText = sqltextarea.getValue();
         var textareaEl = sqltextarea.inputEl.dom;
         //sqltextarea.setValue(this.findname);
@@ -212,7 +220,8 @@ Ext.define('Plus.controller.SaveOpen',{
         }
         var startIndex;
         if(this.forward) { //정방향 selection이 있으면 selection 이후 위치 부터
-            var searchfrom = currentPos+1;
+            var searchfrom = currentPos;
+            if(selectedText!='') searchfrom = currentPos + selectedText.length;
             console.log(searchfrom);
             var startIndex = targetText.indexOf(searchText, searchfrom);
         } else{ //역방향 검샘
