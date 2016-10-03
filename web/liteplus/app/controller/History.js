@@ -11,10 +11,10 @@ Ext.define('Plus.controller.History',{
         this.control({
             'westtoolbarsub02 button[itemId=next], westtoolbarsub01 button[itemId=previous]' : { //정확하게 지정
                 click: this.onPrevNextClick
-            }/*,
-            'button[itemId=previous]' : {
-                click: this.onMergeClick
-            }*/
+            },
+            'westtoolbarsub02 button[itemId=history]' : {
+                click: this.onHistoryClick
+            }
         });
     },
 
@@ -36,30 +36,6 @@ Ext.define('Plus.controller.History',{
         var clientMessage = JSON.stringify(clientMessage);
         console.log(clientMessage);
         mywebsocket.send (clientMessage);
-
-        //var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
-        //var sqlController = Plus.app.getController('Query');
-        //var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
-        //var tablename;
-        //if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
-        //    tablename = selectedText;
-        //    $(sqltextarea.inputEl.dom).setSelection(sqlController.input.selectionStart, sqlController.input.selectionEnd) //현재 선택을 유지한다
-        //} else {   // 선택된 것이 없으면, SQL 자동 선택
-        //    var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
-        //    tablename = this.getTableFromLine(sqltextarea);
-        //    $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
-        //}
-        //console.log('View name:'+sqltext);
-        //this.viewname = tablename;
-        //var sqltext = tablename; //테이블명
-        //
-        //// 웹소켓으로 SQL문 메시지를 보낸다
-        //var clientMessage = new Object();
-        //clientMessage.messageType = "merge";
-        //clientMessage.sqltext = sqltext;
-        //var clientMessage = JSON.stringify(clientMessage);
-        //console.log(clientMessage);
-        //mywebsocket.send (clientMessage);
     },
 
     onResult : function(message) {
@@ -154,5 +130,13 @@ Ext.define('Plus.controller.History',{
         console.log('시작지점:'+startPos + ', 종료지점:'+endPos);
 
         return endPos;
+    },
+
+    onHistoryClick: function(button, e, eOpts){
+        console.log('Get Sql from History button click');
+        this.historypopup = Ext.create('Plus.view.popup.History',{
+
+        });
+        this.historypopup.show(); //textfield focus
     }
 });

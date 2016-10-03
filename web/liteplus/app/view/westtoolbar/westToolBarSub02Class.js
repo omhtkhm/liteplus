@@ -37,7 +37,8 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
         icon: '../resources/images/liteplus_icon_10.png',
         cls: 'my-btn-icon',
         tooltip: 'Get SQL From Histroy',
-        disabled: true,
+        //disabled: true,
+        itemId: 'history',
         padding: '0,0',
         scale: 'large'
     },{
