@@ -38,7 +38,7 @@ Ext.define('Plus.controller.SaveOpen',{
     onSaveClick: function(){
         console.log('Save button click');
         //this.filename = '1'; // 단순 저장은 파일명을 '1'로 고정한다.
-        //this.saveas = false;
+        this.saveas = false;
         if(!this.filename) { // 파일명을 저장했으면
             this.savepopup = Ext.create('Plus.view.popup.Save');
             this.savepopup.show();
@@ -50,8 +50,11 @@ Ext.define('Plus.controller.SaveOpen',{
 
     localStorageSave: function(){
         console.log('Local Storage pop save clicked!');
+
         var form = Ext.ComponentQuery.query('form[name=saveform]')[0];
-        if(!form.isValid()) return false; // 빈칸 validation check
+        if(form) { // 팝업이 있는 경우
+            if (!form.isValid()) return false; // 빈칸 validation check
+        }
         //sessionStorage.setItem('isFileName', 'true'); //세션스토리지에 파일명이 저장되었음을 flag함
         var sqltextaray = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var savetext = sqltextaray.getValue();
@@ -164,6 +167,10 @@ Ext.define('Plus.controller.SaveOpen',{
         var startIndex;
         if(this.forward) { //정방향
             var searchfrom = currentPos+1;
+            //sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
+            //var sqlController = Plus.app.getController('Query');
+            //var selectedText = sqlController.getSelectedText(sqltextarea); //선택된값을 가져온다.
+            //if(selectedText!='') searchfrom = currentPos + selectedText.length;
             console.log(searchfrom);
             var startIndex = targetText.indexOf(searchText, searchfrom);
         } else{ //역방향 검샘
@@ -178,7 +185,7 @@ Ext.define('Plus.controller.SaveOpen',{
 
             $(sqltextarea.inputEl.dom).setSelection(startIndex, endIndex);
             console.log(startIndex);
-            $(sqltextarea.inputEl.dom).scrollTop(startIndex-200);
+            $(sqltextarea.inputEl.dom).scrollTop(startIndex);
 
             queryResultLabel.setText('Ready');
         } else{ //찾는 문자가 없는 경우
@@ -187,11 +194,13 @@ Ext.define('Plus.controller.SaveOpen',{
     },
 
     findTextFromShortKey: function(){
+        if(!this.findname) return false;
         var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var textareaText = sqltextarea.getValue();
+        var textareaEl = sqltextarea.inputEl.dom;
         //sqltextarea.setValue(this.findname);
-        var currentPos = $(sqltextarea.inputEl.dom).getCursorPosition();
-        $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
+        var currentPos = $(textareaEl).getCursorPosition();
+        $(textareaEl).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
         var targetText = textareaText;
         var searchText = this.findname;
         if(!this.casesensitive) { //대소문자 안가리면 대문자 변경
@@ -202,7 +211,7 @@ Ext.define('Plus.controller.SaveOpen',{
             searchText = ' '+searchText+' ';
         }
         var startIndex;
-        if(this.forward) { //정방향
+        if(this.forward) { //정방향 selection이 있으면 selection 이후 위치 부터
             var searchfrom = currentPos+1;
             console.log(searchfrom);
             var startIndex = targetText.indexOf(searchText, searchfrom);
@@ -216,9 +225,10 @@ Ext.define('Plus.controller.SaveOpen',{
             if(this.whole) startIndex = startIndex +1; //단어가 같아야 되면 공백을 포함하였으므로
             var endIndex = startIndex + this.findname.length;
 
-            $(sqltextarea.inputEl.dom).setSelection(startIndex, endIndex);
+            $(textareaEl).setSelection(startIndex, endIndex);
             console.log(startIndex);
-            $(sqltextarea.inputEl.dom).scrollTop(startIndex-200);
+            $(textareaEl).scrollTop(startIndex-200);
+            //$(textareaEl).scrollTop($(textareaEl).offset().top);
 
             queryResultLabel.setText('Ready');
         } else{ //찾는 문자가 없는 경우
