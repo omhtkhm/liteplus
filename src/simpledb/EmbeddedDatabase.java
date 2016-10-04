@@ -132,6 +132,20 @@ public class EmbeddedDatabase {
         return rs;
     }
 
+    public static ResultSet selectSqlHistGrid() {
+        PreparedStatement pstmt;
+        ResultSet rs = null;
+
+        try {
+            pstmt = connection.prepareStatement("select id, lastrun, sqlstmt from sql_history order by id desc");
+            rs = pstmt.executeQuery();
+
+        } catch (SQLException ex) {
+            System.out.println("in connection" + ex);
+        }
+        return rs;
+    }
+
 //    public static Connection createDatabaseConnection() throws SQLException {
 //        Driver derbyEmbeddedDriver = new EmbeddedDriver();
 //        DriverManager.registerDriver(derbyEmbeddedDriver);

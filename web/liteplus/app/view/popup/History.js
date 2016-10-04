@@ -6,6 +6,9 @@ Ext.define('Plus.view.popup.History', {
     alias : 'widget.history',
     name : 'history',
     title : 'SQL History',
+    requires: [
+        'Plus.view.popup.HistoryGrid'
+    ],
     layout: 'vbox',
     modal: true,
     listeners: {
@@ -26,29 +29,37 @@ Ext.define('Plus.view.popup.History', {
         e.stopEvent();
         //Ext.ComponentQuery.query('find[name=find]')[0].close(); //OK버튼을 찾아서 click이벤트 발생. enter이벤트를 여기서 멈추어야 함
     },
-
     items: [{
         layout: 'hbox',
+        align: 'stretch',
+        width: 800,
+        //padding: '5 5',
+        border: false,
         items:[{
             xtype: 'radiofield',
             name: 'writemode',
             //value: 'insert',
             inputValue: 'insert',
-            boxLabel: 'Insert'
+            boxLabel: 'Insert',
+            width: 70,
+            margin: '2 0 2 15'
         },{
             xtype: 'radiofield',
             name: 'writemode',
             //value: 'overwrite',
             inputValue: 'overwrite',
-            boxLabel: 'Overwrite'
+            boxLabel: 'Overwrite',
+            width : 100,
+            margin: '2 0 2 0'
         },{
             xtype: 'textfield',
             value: '%',
-            fieldLabel: 'Find'
-        }]
-    },
-    {
-        xtype: 'textfield',
-        fieldLabel: 'temp'
+            fieldLabel: 'Find',
+            labelWidth: 30,
+            width: 610,
+            //align: 'stretch',
+            margin: '2 0 2 0',
+        }]},{
+        xtype: 'historygrid'
     }]
 });

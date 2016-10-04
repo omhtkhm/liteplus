@@ -54,6 +54,9 @@ Ext.define('Plus.controller.WSocket', {
                 case 'history' :
                     Plus.app.getController('History').onResult(message);
                     break;
+                case 'historygrid' :
+                    Plus.app.getController('History').onHistGridResult(message);
+                    break;
                 //case 'popup' :
                 //    this.popupMessage(jsonResult);
                 //    break;

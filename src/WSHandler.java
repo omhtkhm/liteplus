@@ -67,6 +67,11 @@ public class WSHandler extends websocket {
                 String strDirection = jobject.get("direction").getAsString();
                 replymessage = myHistory.handleMessage(strQueryText,strDirection);
                 break;
+            case 6:     // HistoryGrid 메시지 인 경우,
+                Log.debug("client message Type : History Grid");
+                HistoryGrid myHistoryGrid = new HistoryGrid();
+                replymessage = myHistoryGrid.handleMessage();
+                break;
             default:
                 replymessage = "There is NO proper message type included for server to process client message!";
                 break;

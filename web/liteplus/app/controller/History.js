@@ -134,9 +134,32 @@ Ext.define('Plus.controller.History',{
 
     onHistoryClick: function(button, e, eOpts){
         console.log('Get Sql from History button click');
-        this.historypopup = Ext.create('Plus.view.popup.History',{
+        var clientMessage = new Object();
+        clientMessage.messageType = "historygrid";
+        clientMessage.sqltext=""; //원래없어도 되지만, 다른 호출함수와 일관성을 맞추기 위해서 서버에서 처리하도록 설정
+        //clientMessage.sqltext = this.curruntHistIndex;
 
+        var clientMessage = JSON.stringify(clientMessage);
+        console.log(clientMessage);
+        mywebsocket.send (clientMessage);
+    },
+
+    onHistGridResult: function(message) {
+        this.historypopup = Ext.create('Plus.view.popup.History',{
         });
+        var historypopupgrid = Ext.ComponentQuery.query('historygrid[name=historygrid]')[0];
+        var sqlController = Plus.app.getController('Query');
+        //jsonResultSet = '[{"id": "tablespace","datetime": "users","sql": "users"},{"id": "tablespace","datetime": "users","sql": "users"}]'; //문자열이 아닌 객체를 넣어야 함
+        //var resultArray = new Array();
+        //var rowInfo = new Object();
+        //rowInfo.id = "test";
+        //rowInfo.datetime="test";
+        //rowInfo.sql ="test";
+        //resultArray.push(rowInfo);
+        var jsonResult = Ext.JSON.decode(message); // Json 스트링으로 받은 값을 Json객체로 바꾼다
+        var resultArray = jsonResult.resultsethistorygrid; // object의 array가 들어있다. string의 array가 아님
+        console.log(resultArray);
+        historypopupgrid.reconfigure(sqlController.createStore(resultArray)); // createStore함수에는 객체의 배열을 넣으면 됨
         this.historypopup.show(); //textfield focus
     }
 });
