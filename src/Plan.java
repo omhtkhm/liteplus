@@ -110,7 +110,13 @@ public class Plan {
                 setParentID.add(rs.getInt("PARENT_ID"));
             }
             //
-            String strPlanQueryResult = "select OPERATION || ' ' || OPTIONS || ' ' ||  (case when OBJECT_OWNER is null then '' else (OBJECT_OWNER || '.') end) ||  OBJECT_NAME || (case when OBJECT_INSTANCE is null then ' ' else '(' ||  OBJECT_INSTANCE || ') ' end) ||  OPTIMIZER || (case when rownum=1 then '-Cost : ' || COST end) || (case when ACCESS_PREDICATES is null then '' else ' (' ||  ACCESS_PREDICATES || ')' end) || (case when FILTER_PREDICATES is null then '' else ' (' ||  FILTER_PREDICATES || ')' end)  as planinfo, ID, PARENT_ID, DEPTH from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
+            String strPlanQueryResult = "select OPERATION || ' ' || OPTIONS || ' ' ||  (case when OBJECT_OWNER is null then '' else (OBJECT_OWNER || '.') end) ||  OBJECT_NAME || (case when OBJECT_INSTANCE is null then ' ' else '(' ||  OBJECT_INSTANCE || ') ' end) ||  OPTIMIZER || (case when rownum=1 then '-Cost : ' || COST end) || (case when ACCESS_PREDICATES is null then '' else ' (' ||  ACCESS_PREDICATES || ')' end) || (case when FILTER_PREDICATES is null then '' else ' (' ||  FILTER_PREDICATES || ')' end)  as planinfo, ID, PARENT_ID, DEPTH, "+
+                    "case when object_type like 'TABLE%' " +
+                    "            then (select to_char(last_analyzed,'YYYYMMDD') from all_tables t where t.owner = p.object_owner and t.table_name = p.object_name) " +
+                    "            when object_type like 'INDEX%' " +
+                    "            then (select to_char(last_analyzed,'YYYYMMDD') from all_indexes i where i.owner = p.object_owner and i.index_name = p.object_name) " +
+                    "            end ANALYZED " +
+                    "from PLAN_TABLE p where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
             Log.debug(strPlanQueryResult);
             statement = connection.prepareStatement(strPlanQueryResult);
             rs = statement.executeQuery(); // Plan_table 쿼리 수행
@@ -171,7 +177,9 @@ public class Plan {
                 aInfo.append("{");
                 arrBracket.add('{');
                 Log.debug("{");
-                String strPlanInfo = rs.getString("PLANINFO");
+                String strPlanInfo = null;
+                if(rs.getString("ANALYZED")!=null) strPlanInfo = rs.getString("PLANINFO") + " " + rs.getString("ANALYZED");
+                else strPlanInfo = rs.getString("PLANINFO");
                 strPlanInfo = strPlanInfo.replace("\"","\\\""); // "를 \"로 변환
                 aInfo.append("\"text\" : \"").append(strPlanInfo).append("\",");
                 if(setParentID.contains(rs.getInt("ID"))) {
