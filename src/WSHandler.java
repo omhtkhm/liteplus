@@ -72,8 +72,13 @@ public class WSHandler extends websocket {
                 HistoryGrid myHistoryGrid = new HistoryGrid();
                 replymessage = myHistoryGrid.handleMessage();
                 break;
+            case 7:     // Batch 메시지 인 경우,
+                Log.debug("client message Type : batch");
+                Batch myBatch = new Batch();
+                replymessage = myBatch.handleMessage(strQueryText);
+                break;
             default:
-                replymessage = "There is NO proper message type included for server to process client message!";
+                replymessage = handleMessage();
                 break;
         }
 //        String replymessage = aInfo.toString();
@@ -82,6 +87,16 @@ public class WSHandler extends websocket {
         return replymessage;
     }
 
+    public String handleMessage(){
+        JsonObject aInfo = new JsonObject();
+        aInfo.addProperty("success", false); //{"success":true}
+        aInfo.addProperty("messageType", "error");
+        aInfo.addProperty("errorMessage", "There is NO proper message type included for server to process client message!");
+
+        String strJson = aInfo.toString();
+        Log.debug(strJson);
+        return strJson;
+    }
 //    @OnOpen
 //    public void handleOpen(){
 //        System.out.println("WSHandler: client is now connected...");

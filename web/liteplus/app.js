@@ -26,7 +26,8 @@ Ext.application({
         'Merge',
         'SaveOpen',
         'PlanTree',
-        'History'
+        'History',
+        'Batch'
     ],
     //autoCreateViewport: true,
 

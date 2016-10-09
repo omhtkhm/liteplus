@@ -39,7 +39,7 @@ Ext.define('Plus.controller.Plan',{
 
         var tabs = Ext.ComponentQuery.query('sqltabpanel[name=sqltabpanel]')[0];
         var items = tabs.items.items;
-        tabs.setActiveTab(items[1].id);
+        tabs.setActiveTab(items[1].id); //Plan결과 Tab에 위치한다
 
         // 웹소켓으로 SQL문 메시지를 보낸다
         var clientMessage = new Object();

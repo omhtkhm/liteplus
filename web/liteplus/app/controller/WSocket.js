@@ -57,9 +57,19 @@ Ext.define('Plus.controller.WSocket', {
                 case 'historygrid' :
                     Plus.app.getController('History').onHistGridResult(message);
                     break;
+                case 'batch' :
+                    Plus.app.getController('Batch').onResult(message);
+                    break;
                 //case 'popup' :
                 //    this.popupMessage(jsonResult);
                 //    break;
+                case 'error' :
+                    console.log('error MessageType received');
+                    var errormessage = jsonResult.errorMessage;
+                    Ext.MessageBox.alert('LitePlus', errormessage, function(){
+                        return false;
+                    });
+                    break;
                 default :
                 {
                     console.log('Not Expected MessageType received');

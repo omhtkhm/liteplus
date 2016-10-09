@@ -16,7 +16,7 @@ Ext.define('Plus.view.westtoolbar.westToolBarSub02Class', {
         icon: '../resources/images/liteplus_icon_4.png',
         cls: 'my-btn-icon',
         tooltip: 'Batch Run (F6)',
-        disabled: true,
+        itemId: 'batch',
         padding: '0,0',
         scale: 'large'
     },{

@@ -6,6 +6,7 @@
 Ext.require('Plus.view.bottom.PlanResult');
 Ext.require('Plus.view.bottom.GridResult');
 Ext.require('Plus.view.bottom.ResultBar');
+Ext.require('Plus.view.bottom.BatchOutput');
 
 Ext.define('Plus.view.bottom.TabPanel', {
     extend: 'Ext.tab.Panel',
@@ -17,7 +18,8 @@ Ext.define('Plus.view.bottom.TabPanel', {
     activeTab: 0,
     items: [
         {xtype: 'gridresult'},
-        {xtype: 'planresult'}
+        {xtype: 'planresult'},
+        {xtype: 'batchoutput'}
     ],
     dockedItems: [{
         xtype: 'resultbar',
