@@ -5,6 +5,8 @@ Ext.define('Plus.controller.Batch',{
     extend: 'Ext.app.Controller',
     alias: 'controller.batch',
     views: ['bottom.BatchOutput'],
+    arraySqls: '',
+    batchResults: '',
     init: function(){
         console.log('Initialized QueryS Controller');
         this.control({
@@ -17,14 +19,15 @@ Ext.define('Plus.controller.Batch',{
         });
     },
 
-    onBatchClick: function(button, e, eOpts){
+    onBatchClick: function(button, e, eOpts) {
         console.log('Batch Run Button clicked');
+        this.batchResults='';
 
         var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var selectedText = this.getSelectedText(sqltextarea); //선택된값을 가져온다.
         //선택된 값이 없으면, 빈칸으로 구분된 것을 선택값으로 본다.
-        var sqltext ;
-        if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
+        var sqltext;
+        if (selectedText != '') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
             sqltext = selectedText;
             $(sqltextarea.inputEl.dom).setSelection(this.input.selectionStart, this.input.selectionEnd) //현재 선택을 유지한다
         } else {   // 선택된 것이 없으면, SQL 자동 선택
@@ -32,7 +35,7 @@ Ext.define('Plus.controller.Batch',{
             sqltext = Plus.app.getController('Format').getAutoLinesSelection(sqltextarea); //빈줄을 기준으로 커서위치를 선택한다.
             $(sqltextarea.inputEl.dom).setCursorPosition(currentPos); //현재위치에 가져다 놓는다
         }
-        console.log('sqltext: '+sqltext);
+        console.log('sqltext: ' + sqltext);
 
         // SQL문은 각각 처리해야 한다. 아래 기준으로 SQL문을 개별로 선택한다.
         // (1) 행의 마지막 글자가 세미콜론인 경우
@@ -40,10 +43,19 @@ Ext.define('Plus.controller.Batch',{
         //var re = /[.,\n,\r,\u2028,\u2029,\u0085]*;[.,\n,\r,\u2028,\u2029,\u0085]*/g;
         //var re = /.*;.*/g;
         var re = /;/;
-        var arraySqltext = sqltext.split(re);
+        //var arraySqltext = sqltext.split(re);
+        arraySqltext = sqltext.split(re);
         //console.log('regular expression: '+JSON.stringify(myArray) );
         //console.log('regular expression: '+myArray[0] );
         //console.log('regular expression: '+myArray[1] );
+        for(var i=0; i < arraySqltext.length ; i++) {
+            if (arraySqltext[i].replace(/\s/gi, '') == '') {
+                arraySqltext.splice(i, 1);      //공백으로 분리된 것은 제외
+                continue;
+            }
+            arraySqltext[i] = arraySqltext[i].replace(/^\s+/g, '');
+        }
+        this.arraySqls = arraySqltext;
 
         var tabs = Ext.ComponentQuery.query('sqltabpanel[name=sqltabpanel]')[0];
         var items = tabs.items.items;
@@ -52,10 +64,19 @@ Ext.define('Plus.controller.Batch',{
         // 웹소켓으로 SQL문 메시지를 보낸다
         var clientMessage = new Object();
         clientMessage.messageType = "batch";
-        clientMessage.sqltext = arraySqltext[0];
-        var clientMessage = JSON.stringify(clientMessage);
-        console.log(clientMessage);
-        mywebsocket.send(clientMessage);
+        var clientMessageJsonString;
+        for(var i=0; i < arraySqltext.length ; i++) {
+            //if(arraySqltext[i].replace(/\s/gi, '') == '') {
+            //    arraySqltext.splice(i,1);      //공백으로 분리된 것은 제외
+            //    continue;
+            //}
+            console.log("batchsql: "+arraySqltext[i]);
+            clientMessage.sqltext = arraySqltext[i];
+            clientMessage.sqlindex = i;  // 메시지 수신 시 어떤 SQL배치문을 수행한 결과인지를 확인하기 위한 인덱스
+            clientMessageJsonString = JSON.stringify(clientMessage);
+            console.log(clientMessageJsonString);
+            mywebsocket.send(clientMessageJsonString);
+        }
     },
 
     onResult : function(message) {
@@ -66,65 +87,25 @@ Ext.define('Plus.controller.Batch',{
         var success = jsonResult.success;
         var firstRowTime = jsonResult.FirstRowTime;
         var jsonResultSet = jsonResult.resultset; // object의 array가 들어있다. string의 array가 아님 -> 단순 TEXT가 들어있음.
+        var sqlindex = jsonResult.sqlindex;
         console.log(success);
         console.log(firstRowTime);
 
-        // 배치 결과를 텍스트 테이블 형태로 만들어야 함
         var queryResultLabel = Ext.ComponentQuery.query('label[name=queryresultlabelname]')[0];
         queryResultLabel.setText(firstRowTime);
-        //var queryController = this.getController('Query');
-        //var strColumnArray = queryController.getKeysFromJson(jsonResultSet[0]); //첫번째 객체배열에서 컬럼값 뽑아내기. 리턴값으로 string 배열.
-        //batchOutput.setValue(strColumnArray);
-        //batchOutput.getEl().setStyle({'background': '#3d4046', 'font-family': 'monospace', 'fontSize':'25px'});
 
-        batchOutput.setValue(jsonResultSet);
+        // 배치 결과를 출력
+        var batchResult = 'SQL> '+this.arraySqls[sqlindex] + ';\n\n\n' + jsonResultSet +'\n\n';
+        this.batchResults = this.batchResults + batchResult;
+        batchOutput.setValue(this.batchResults);
         batchOutput.setFieldStyle({'background': '#000000', 'font-family': 'monospace', fontSize:'12px', color:'white', 'white-space': 'pre', 'overflow-x': 'auto'});
     },
 
-    getKeysFromJson : function (obj) {
-        var keys = [];
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                keys.push(key);
-            }
-        }
-        return keys;
-    },
-
-    createStore : function (json) {  // json에 json객체의 배열이 들어감
-        var keys = this.getKeysFromJson(json[0]); // 0번째 행의 Json객체
-        return Ext.create('Ext.data.Store', {
-            fields: keys,
-            data: json     // 데이터는 json객체 배열을 그대로 넣었음
-        });
-    },
-
-    createColumns : function (json) {
-        var keys = this.getKeysFromJson(json[0]);
-        return keys.map(function (field) {
-            return {
-                text: Ext.String.capitalize(field),
-                //width: 150,
-                dataIndex: field
-            };
-        });
-    },
-
     onKeyDown: function(textarea, e, eOpts){
-        if(e.getCharCode()==Ext.EventObject.F7){ // Ext5 Style
-            console.log('F7 key down');
-            this.onQueryClick();
+        if(e.getCharCode()==Ext.EventObject.F6){ // Ext5 Style
+            console.log('F6 key down');
+            this.onBatchClick();
         }
-    },
-
-    onChangeLabel: function(textarea, e, eOpts){
-        var nRowLabel = Ext.ComponentQuery.query('label[name=nrowlabel]')[0]; //하단라벨:행
-        var nColLabel = Ext.ComponentQuery.query('label[name=ncollabel]')[0]; //하단라벨:열
-        var nLineCol = this.getLineNumberAndColumnIndex(textarea.inputEl.dom);
-        var nRow = nLineCol.line;
-        var nCol = nLineCol.col;
-        nRowLabel.setText('Line '+nRow);
-        nColLabel.setText('Col '+nCol);
     },
 
     // Textarea에서 셀렉션값 가져오는 함수

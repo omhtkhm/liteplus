@@ -75,7 +75,8 @@ public class WSHandler extends websocket {
             case 7:     // Batch 메시지 인 경우,
                 Log.debug("client message Type : batch");
                 Batch myBatch = new Batch();
-                replymessage = myBatch.handleMessage(strQueryText);
+                String sqlIndex = jobject.get("sqlindex").getAsString();
+                replymessage = myBatch.handleMessage(strQueryText, sqlIndex);
                 break;
             default:
                 replymessage = handleMessage();
