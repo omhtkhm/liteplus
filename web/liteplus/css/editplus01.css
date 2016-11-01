@@ -10,6 +10,7 @@
 .resulttab .x-tab-inner-center { font-size:12pt; !important;}
 .maintab .x-tab-inner-center { font-size:12pt; !important;}
 .textarea .x-form-textarea { color:black; font-family:"Courier New"; font-size:16pt; !important;}
+/*.batchoutput {background: #3d4046; font-family: monospace; !important;}*/
 .my-btn-icon {
     /*background-image: url(../../resources/images/liteplus_icon_1.png) !important;*/
     width:32px!important;

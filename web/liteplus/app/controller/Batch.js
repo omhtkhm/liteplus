@@ -22,7 +22,7 @@ Ext.define('Plus.controller.Batch',{
 
         var sqltextarea = Ext.ComponentQuery.query('textarea[name=sqltextarea]')[0];
         var selectedText = this.getSelectedText(sqltextarea); //선택된값을 가져온다.
-
+        //선택된 값이 없으면, 빈칸으로 구분된 것을 선택값으로 본다.
         var sqltext ;
         if(selectedText!='') {   // 선택된 셀렉션값이 있으면, SQL문을 선택된값으로 수정한다.
             sqltext = selectedText;
@@ -34,6 +34,17 @@ Ext.define('Plus.controller.Batch',{
         }
         console.log('sqltext: '+sqltext);
 
+        // SQL문은 각각 처리해야 한다. 아래 기준으로 SQL문을 개별로 선택한다.
+        // (1) 행의 마지막 글자가 세미콜론인 경우
+        // 세미콜론 기준으로 배열에 입력한다.
+        //var re = /[.,\n,\r,\u2028,\u2029,\u0085]*;[.,\n,\r,\u2028,\u2029,\u0085]*/g;
+        //var re = /.*;.*/g;
+        var re = /;/;
+        var arraySqltext = sqltext.split(re);
+        //console.log('regular expression: '+JSON.stringify(myArray) );
+        //console.log('regular expression: '+myArray[0] );
+        //console.log('regular expression: '+myArray[1] );
+
         var tabs = Ext.ComponentQuery.query('sqltabpanel[name=sqltabpanel]')[0];
         var items = tabs.items.items;
         tabs.setActiveTab(items[2].id); // Batch결과 Tab에 위치시킨다
@@ -41,7 +52,7 @@ Ext.define('Plus.controller.Batch',{
         // 웹소켓으로 SQL문 메시지를 보낸다
         var clientMessage = new Object();
         clientMessage.messageType = "batch";
-        clientMessage.sqltext = sqltext;
+        clientMessage.sqltext = arraySqltext[0];
         var clientMessage = JSON.stringify(clientMessage);
         console.log(clientMessage);
         mywebsocket.send(clientMessage);
@@ -54,15 +65,20 @@ Ext.define('Plus.controller.Batch',{
 
         var success = jsonResult.success;
         var firstRowTime = jsonResult.FirstRowTime;
-        var jsonResultSet = jsonResult.resultset; // object의 array가 들어있다. string의 array가 아님
+        var jsonResultSet = jsonResult.resultset; // object의 array가 들어있다. string의 array가 아님 -> 단순 TEXT가 들어있음.
         console.log(success);
         console.log(firstRowTime);
 
+        // 배치 결과를 텍스트 테이블 형태로 만들어야 함
         var queryResultLabel = Ext.ComponentQuery.query('label[name=queryresultlabelname]')[0];
         queryResultLabel.setText(firstRowTime);
-        var queryController = this.getController('Query');
-        var strColumnArray = queryController.getKeysFromJson(jsonResultSet[0]); //첫번째 객체배열에서 컬럼값 뽑아내기. 리턴값으로 string 배열.
-        batchOutput.setValue(strColumnArray);
+        //var queryController = this.getController('Query');
+        //var strColumnArray = queryController.getKeysFromJson(jsonResultSet[0]); //첫번째 객체배열에서 컬럼값 뽑아내기. 리턴값으로 string 배열.
+        //batchOutput.setValue(strColumnArray);
+        //batchOutput.getEl().setStyle({'background': '#3d4046', 'font-family': 'monospace', 'fontSize':'25px'});
+
+        batchOutput.setValue(jsonResultSet);
+        batchOutput.setFieldStyle({'background': '#000000', 'font-family': 'monospace', fontSize:'12px', color:'white', 'white-space': 'pre', 'overflow-x': 'auto'});
     },
 
     getKeysFromJson : function (obj) {
