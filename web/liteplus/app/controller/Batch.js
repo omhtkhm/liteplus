@@ -40,14 +40,10 @@ Ext.define('Plus.controller.Batch',{
         // SQL문은 각각 처리해야 한다. 아래 기준으로 SQL문을 개별로 선택한다.
         // (1) 행의 마지막 글자가 세미콜론인 경우
         // 세미콜론 기준으로 배열에 입력한다.
-        //var re = /[.,\n,\r,\u2028,\u2029,\u0085]*;[.,\n,\r,\u2028,\u2029,\u0085]*/g;
-        //var re = /.*;.*/g;
         var re = /;/;
         //var arraySqltext = sqltext.split(re);
         arraySqltext = sqltext.split(re);
-        //console.log('regular expression: '+JSON.stringify(myArray) );
         //console.log('regular expression: '+myArray[0] );
-        //console.log('regular expression: '+myArray[1] );
         for(var i=0; i < arraySqltext.length ; i++) {
             if (arraySqltext[i].replace(/\s/gi, '') == '') {
                 arraySqltext.splice(i, 1);      //공백으로 분리된 것은 제외
@@ -66,10 +62,6 @@ Ext.define('Plus.controller.Batch',{
         clientMessage.messageType = "batch";
         var clientMessageJsonString;
         for(var i=0; i < arraySqltext.length ; i++) {
-            //if(arraySqltext[i].replace(/\s/gi, '') == '') {
-            //    arraySqltext.splice(i,1);      //공백으로 분리된 것은 제외
-            //    continue;
-            //}
             console.log("batchsql: "+arraySqltext[i]);
             clientMessage.sqltext = arraySqltext[i];
             clientMessage.sqlindex = i;  // 메시지 수신 시 어떤 SQL배치문을 수행한 결과인지를 확인하기 위한 인덱스
