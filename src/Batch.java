@@ -109,11 +109,14 @@ public class Batch {
                 bInfo.addProperty(" ", " "); //{"success":true}
                 infoArray.add(bInfo); // [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]
                 aInfo.addProperty("resultset", resultText.toString());
+                aInfo.addProperty("sqlindex", sqlIndex);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
-            aInfo = sqlExceptionToGrid(e);
+            aInfo = sqlExceptionBatch(e);
+//            aInfo.addProperty("resultset", e.getMessage());
+            aInfo.addProperty("sqlindex", sqlIndex);
             Log.debug(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,17 +139,17 @@ public class Batch {
         return aInfo.toString();
     }
 
-    public JsonObject sqlExceptionToGrid(SQLException e) {
+    public JsonObject sqlExceptionBatch(SQLException e) {
         JsonObject aInfo = new JsonObject();
         aInfo.addProperty("success", false); //{"success":true}
         aInfo.addProperty("messageType", "batch"); //{"success":true}
         aInfo.addProperty("FirstRowTime", e.getMessage()); //{"success":"", "FirstRowTime":""}
 
-        JsonObject bInfo = new JsonObject(); // {}
-        JsonArray infoArray = new JsonArray(); // []
-        bInfo.addProperty(" ", " "); //{"success":true}
-        infoArray.add(bInfo); // [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]
-        aInfo.add("resultset", infoArray); //{"success": cc, "FirstRowTime": dd, "resultset": [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]}
+//        JsonObject bInfo = new JsonObject(); // {}
+//        JsonArray infoArray = new JsonArray(); // []
+//        bInfo.addProperty(" ", " "); //{"success":true}
+//        infoArray.add(bInfo); // [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]
+        aInfo.addProperty("resultset", e.getMessage()); //{"success": cc, "FirstRowTime": dd, "resultset": [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]}
         return aInfo;
     }
 }

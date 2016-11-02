@@ -10,11 +10,11 @@ Ext.define('Plus.controller.Batch',{
     init: function(){
         console.log('Initialized QueryS Controller');
         this.control({
-            'westtoolbarsub02 #batch' : {  // 툴바에 itemId: 'query',로 설정한 경우, 사용
+            'westtoolbarsub02 #batch' : {  // 툴바에 itemId: 'batch',로 설정한 경우, 사용
                 click: this.onBatchClick
             },
             'centertextarea' : {
-                keydown: this.onKeyDown,   // F7 쿼리키 핸들링
+                keydown: this.onKeyDown,   // F6 쿼리키 핸들링
             }
         });
     },
@@ -41,8 +41,7 @@ Ext.define('Plus.controller.Batch',{
         // (1) 행의 마지막 글자가 세미콜론인 경우
         // 세미콜론 기준으로 배열에 입력한다.
         var re = /;/;
-        //var arraySqltext = sqltext.split(re);
-        arraySqltext = sqltext.split(re);
+        var arraySqltext = sqltext.split(re);
         //console.log('regular expression: '+myArray[0] );
         for(var i=0; i < arraySqltext.length ; i++) {
             if (arraySqltext[i].replace(/\s/gi, '') == '') {
@@ -73,7 +72,6 @@ Ext.define('Plus.controller.Batch',{
 
     onResult : function(message) {
         var batchOutput = Ext.ComponentQuery.query('batchoutput[name=batchoutput]')[0];
-
         var jsonResult = Ext.JSON.decode(message); //json스트링을 json Object로 바꾼다
 
         var success = jsonResult.success;
@@ -87,7 +85,7 @@ Ext.define('Plus.controller.Batch',{
         queryResultLabel.setText(firstRowTime);
 
         // 배치 결과를 출력
-        var batchResult = 'SQL> '+this.arraySqls[sqlindex] + ';\n\n\n' + jsonResultSet +'\n\n';
+        var batchResult = 'SQL> '+this.arraySqls[sqlindex] + ';\n\n\n' + jsonResultSet +'\n\n\\n';
         this.batchResults = this.batchResults + batchResult;
         batchOutput.setValue(this.batchResults);
         batchOutput.setFieldStyle({'background': '#000000', 'font-family': 'monospace', fontSize:'12px', color:'white', 'white-space': 'pre', 'overflow-x': 'auto'});
