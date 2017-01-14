@@ -12,10 +12,12 @@ Ext.define('Plus.view.main.mainTab', {
     name: 'mainTab',
     cls: 'maintab',
     requires: [
-        'Plus.view.main.Query'
+        'Plus.view.main.Query',
+        'Plus.view.main.OracleInternal'
     ],
     activeTab: 0,
     items: [
-        {xtype: 'query', closable: true}
+        {xtype: 'orain', closable: false},
+        {xtype: 'query', closable: false}
     ]
 });

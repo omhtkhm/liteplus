@@ -1,13 +1,14 @@
-/**
+package exem.liteplusweb; /**
  * Created by win on 2016-09-17.
  */
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import exem.applepie.TablespaceInfo;
 //import simpledb.EmbeddedDatabase;
 
 import javax.websocket.OnMessage;
-//import javax.websocket.OnOpen;
+//import javax.exem.liteplusweb.websocket.OnOpen;
 import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/wshandler")
@@ -62,21 +63,26 @@ public class WSHandler extends websocket {
                 replymessage = myMerge.handleMessage(strQueryText);
                 break;
             case 5:     // format 메시지 인 경우,
-                Log.debug("client message Type : History");
+                Log.debug("client message Type : exem.liteplusweb.History");
                 History myHistory = new History();
                 String strDirection = jobject.get("direction").getAsString();
                 replymessage = myHistory.handleMessage(strQueryText,strDirection);
                 break;
-            case 6:     // HistoryGrid 메시지 인 경우,
-                Log.debug("client message Type : History Grid");
+            case 6:     // exem.liteplusweb.HistoryGrid 메시지 인 경우,
+                Log.debug("client message Type : exem.liteplusweb.History Grid");
                 HistoryGrid myHistoryGrid = new HistoryGrid();
                 replymessage = myHistoryGrid.handleMessage();
                 break;
-            case 7:     // Batch 메시지 인 경우,
+            case 7:     // exem.liteplusweb.Batch 메시지 인 경우,
                 Log.debug("client message Type : batch");
                 Batch myBatch = new Batch();
                 String sqlIndex = jobject.get("sqlindex").getAsString();
                 replymessage = myBatch.handleMessage(strQueryText, sqlIndex);
+                break;
+            case 8:     // applepie.tablespaceinfo 메시지 인 경우,
+                Log.debug("client message Type : tablespaceinfo");
+                TablespaceInfo myTSInfo = new TablespaceInfo();
+                replymessage = myTSInfo.handleMessage();
                 break;
             default:
                 replymessage = handleMessage();
@@ -100,7 +106,7 @@ public class WSHandler extends websocket {
     }
 //    @OnOpen
 //    public void handleOpen(){
-//        System.out.println("WSHandler: client is now connected...");
+//        System.out.println("exem.liteplusweb.WSHandler: client is now connected...");
 ////        if(!isDBinitialized){
 ////            EmbeddedDatabase.initDB();
 ////            isDBinitialized = true;

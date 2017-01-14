@@ -5,13 +5,17 @@ Ext.Loader.setConfig ({
     enabled: true ,
     paths: {
         'Ext.ux.WebSocket': '../resources/websocket/WebSocket.js' ,
-        'Ext.ux.WebSocketManager': '../resources/websocket/WebSocketManager.js'
+        'Ext.ux.WebSocketManager': '../resources/websocket/WebSocketManager.js',
+        'Plus.view.Viewport': './app/view/Viewport.js',
+        'Plus.controller.WSocket': './app/controller/WSocket.js'
     }
 });
 
 //Ext.require('Ext.QuickTips');
-Ext.require('Ext.container.Viewport');
-//Ext.require (['Ext.ux.WebSocket', 'Ext.ux.WebSocketManager']);
+//Ext.require('Ext.container.Viewport');
+Ext.require (['Ext.ux.WebSocket', 'Ext.ux.WebSocketManager']);
+Ext.require('Plus.controller.WSocket');
+Ext.require('Plus.view.Viewport');
 var mywebsocket; //웹소켓을 연결할 변수 선언
 
 Ext.application({
@@ -27,7 +31,8 @@ Ext.application({
         'SaveOpen',
         'PlanTree',
         'History',
-        'Batch'
+        'Batch',
+        'OracleInternal'         // 애플파이 용
     ],
     //autoCreateViewport: true,
 
@@ -49,5 +54,18 @@ Ext.application({
     }
 });
 
+//Ext.onReady(function () {
+////    var oracleInternalController = Plus.app.getController('OracleInternal');
+////    oracleInternalController.onTablespaceInfo(); //시작함수 호출
+//    console.log('onReady function called');
+//});
 
+Ext.TaskManager.start({
+    run: function() {
+        var oracleInternalController = Plus.app.getController('OracleInternal');
+        oracleInternalController.onTablespaceInfo(); //시작함수 호출
+        console.log('onReady function called');
+    },
+    interval: 10000
+});
 

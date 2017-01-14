@@ -1,3 +1,5 @@
+package exem.liteplusweb;
+
 import com.google.gson.JsonObject;
 
 import javax.naming.InitialContext;

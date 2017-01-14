@@ -1,4 +1,4 @@
-/**
+package exem.liteplusweb; /**
  * Created by win on 2016-10-09.
  */
 import com.google.gson.JsonArray;
@@ -28,7 +28,7 @@ public class Batch {
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/DSTest");
             Connection connection = ds.getConnection();
             PreparedStatement statement = connection.prepareStatement(strModifiedSQLText);
-            EmbeddedDatabase.insertSqlHist(message);//Query Embbeded Derby DB에 저장
+            EmbeddedDatabase.insertSqlHist(message);//exem.liteplusweb.Query Embbeded Derby DB에 저장
             //실행시간 측정
             long start = System.currentTimeMillis(); // 실행시간 측정 용
             ResultSet rs = statement.executeQuery();
@@ -36,7 +36,7 @@ public class Batch {
             boolean bFirestRow = rs.next(); // 첫번째 행 가져오기
             long end = System.currentTimeMillis(); //실행시간 측정용
             double elapsedTime = (end - start) / 1000.0;
-//            Log.debug(( "실행 시간 : " + elapsedTime ));
+//            exem.liteplusweb.Log.debug(( "실행 시간 : " + elapsedTime ));
 
             StringBuffer resultText=new StringBuffer();
             if (bFirestRow) {   // 첫행이 존재할 경우,

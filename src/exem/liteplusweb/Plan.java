@@ -1,6 +1,6 @@
-import com.google.gson.JsonArray;
+package exem.liteplusweb;
+
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -82,7 +82,7 @@ public class Plan {
 //        aInfo.append("}");
 //
 //        String bInfo = aInfo.toString();
-//        Log.debug(bInfo);
+//        exem.liteplusweb.Log.debug(bInfo);
 
         try {
             InitialContext ctx = new InitialContext();
@@ -93,13 +93,13 @@ public class Plan {
 
             String strPlan = "EXPLAIN PLAN SET STATEMENT_ID = 'liteplusweb1' FOR "+strModifiedSQLText;
             PreparedStatement statement = connection.prepareStatement(strPlan);
-            statement.executeQuery();  // Explain Plan for ~~ 실행
+            statement.executeQuery();  // Explain exem.liteplusweb.Plan for ~~ 실행
             // id, owner, table, type 가져오기. 가져온 값은 JSON의 detailinfo에 넣는다. { detailinfo: [{ID: '0' , OWNER: 'SCOTT' , OBJECT_NAME: 'TABLE', OBJECT_TYPE: 'TABLE'},{ID: '2' , OWNER: 'SCOTT' , OBJECT_NAME: 'TABLE', OBJECT_TYPE: 'TABLE'}] }
             String strPlanTableDetail = "select ID, OBJECT_OWNER, OBJECT_NAME, OBJECT_TYPE from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
             rs = rstojson.processSQL(connection, strPlanTableDetail);
             rstojson.processResultSet(rs, cInfo, "resultsetdetailinfo"); //aInfo에 json 리절트셋 추가, {"resultsetdetailinfo": [{ "컬럼명":"컬럼값", "컬럼명":"컬럼값",  "컬럼명":"컬럼값" }]}
             String strDetailInfo = cInfo.toString();
-//            Log.debug(strDetailInfo);
+//            exem.liteplusweb.Log.debug(strDetailInfo);
             //
             String strLeafCheck = "select PARENT_ID from PLAN_TABLE where STATEMENT_ID = 'liteplusweb1' and PLAN_ID = (select MAX(PLAN_ID) from plan_table where STATEMENT_ID = 'liteplusweb1')";
             Log.debug(strLeafCheck);

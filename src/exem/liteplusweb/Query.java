@@ -1,3 +1,5 @@
+package exem.liteplusweb;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import simpledb.EmbeddedDatabase;
@@ -18,7 +20,7 @@ public class Query {
         String strSQLText = message;
         String strModifiedSQLText = QueryParser.removeSemicolon(strSQLText);
 //        System.out.println("semicolin deleted : " + strModifiedSQLText);
-//        Log.debug("semicolin deleted : " + strModifiedSQLText);
+//        exem.liteplusweb.Log.debug("semicolin deleted : " + strModifiedSQLText);
 
         JsonObject aInfo = new JsonObject();
         try {
@@ -27,7 +29,7 @@ public class Query {
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/DSTest");
             Connection connection = ds.getConnection();
             PreparedStatement statement = connection.prepareStatement(strModifiedSQLText);
-            EmbeddedDatabase.insertSqlHist(message);//Query Embbeded Derby DB에 저장
+            EmbeddedDatabase.insertSqlHist(message);//exem.liteplusweb.Query Embbeded Derby DB에 저장
             //실행시간 측정
             long start = System.currentTimeMillis(); // 실행시간 측정 용
             ResultSet rs = statement.executeQuery();
@@ -35,7 +37,7 @@ public class Query {
             boolean bFirestRow = rs.next(); // 첫번째 행 가져오기
             long end = System.currentTimeMillis(); //실행시간 측정용
             double elapsedTime = (end - start) / 1000.0;
-//            Log.debug(( "실행 시간 : " + elapsedTime ));
+//            exem.liteplusweb.Log.debug(( "실행 시간 : " + elapsedTime ));
 
             if (bFirestRow) {   // 첫행이 존재할 경우,
                 aInfo.addProperty("success", true); //{"success":true}

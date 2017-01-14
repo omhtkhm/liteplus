@@ -1,7 +1,7 @@
+package exem.liteplusweb;
+
 import com.google.gson.JsonObject;
 import sqlformat.*;
-
-import java.sql.SQLSyntaxErrorException;
 
 /**
  * Created by hun on 2016-09-26.

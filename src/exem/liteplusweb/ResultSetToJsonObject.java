@@ -1,3 +1,5 @@
+package exem.liteplusweb;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -44,7 +46,7 @@ public class ResultSetToJsonObject {
 //    }
 //    public JsonObject processSQLtoJson(Connection connection, String sql, JsonObject aInfo, String strKey) throws SQLException{
 //        System.out.println("sql : " + sql);
-//        Log.debug("sql : " + sql);
+//        exem.liteplusweb.Log.debug("sql : " + sql);
 //        PreparedStatement statement;
 //        ResultSet rs;
 //        statement = connection.prepareStatement(sql);

@@ -31,7 +31,7 @@ Ext.define('Plus.controller.WSocket', {
     },
 
     messageHandler : function(message){
-        var jsonResult = Ext.JSON.decode(message);
+        var jsonResult = Ext.JSON.decode(message);  // java 객체타입
         //var success = jsonResult.success;
         //if(success){  // 성공적을 처리 되었으면, 성공여부는 각 처리로직에서 처리하도록 변경
             var messageType = jsonResult.messageType;
@@ -63,6 +63,9 @@ Ext.define('Plus.controller.WSocket', {
                 //case 'popup' :
                 //    this.popupMessage(jsonResult);
                 //    break;
+                case 'tablespaceinfo' :
+                    Plus.app.getController('OracleInternal').onResult(jsonResult);
+                    break;
                 case 'error' :
                     console.log('error MessageType received');
                     var errormessage = jsonResult.errorMessage;

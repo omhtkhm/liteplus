@@ -1,3 +1,5 @@
+package exem.liteplusweb;
+
 import simpledb.EmbeddedDatabase;
 
 import javax.websocket.OnClose;
@@ -6,7 +8,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/websocket")
+@ServerEndpoint("/exem.liteplusweb.websocket")
 public class websocket {
     static boolean isDBinitialized = false;
     /***
