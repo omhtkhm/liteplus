@@ -22,4 +22,5 @@ Ext.define('Plus.view.main.OracleInternal',{
         region: 'center',
         xtype: 'tablespaceinfo'
     }]
+
 });
