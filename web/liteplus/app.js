@@ -66,6 +66,6 @@ Ext.TaskManager.start({
         oracleInternalController.onTablespaceInfo(); //시작함수 호출
         console.log('onReady function called');
     },
-    interval: 10000
+    interval: 100000
 });
 
