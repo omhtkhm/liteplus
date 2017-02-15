@@ -40,5 +40,8 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+	<listener>
+    	<listener-class>daemon.GatherListener</listener-class>
+	</listener>
 
 </web-app>

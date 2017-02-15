@@ -10,6 +10,7 @@ public class GatherListener implements ServletContextListener {
         Thread th = new Thread() {
             public void run() {
                 // implement daemon logic here.
+                SGAStatTask.start();
             }
         };
         th.setDaemon(true);
