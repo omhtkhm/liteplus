@@ -100,8 +100,8 @@ Ext.define('Plus.controller.Desc',{
             var grantsinfo = grantsinfos[grantsinfos.length - 1];
             var jsonResultSetGrantsInfo = jsonResult.resultsetgrantsinfo;
             grantsinfo.reconfigure(this.createStore(jsonResultSetGrantsInfo), this.createColumns(jsonResultSetGrantsInfo));
-            // Trigger정보 가져와서 뿌리기
-            var triggerinfos = Ext.ComponentQuery.query('trigger[name=trigger]');
+            // MyTrigger정보 가져와서 뿌리기
+            var triggerinfos = Ext.ComponentQuery.query('mytrigger[name=mytrigger]');
             var triggerinfo = triggerinfos[triggerinfos.length - 1]; // 방금 생성한 마지막 탭의 컴포넌트를 가져온다.
             var jsonResultSetTriggerInfo = jsonResult.resultsettriggerinfo;
             if (jsonResultSetTriggerInfo[0] != null) {

@@ -7,16 +7,20 @@ Ext.Loader.setConfig ({
         'Ext.ux.WebSocket': '../resources/websocket/WebSocket.js' ,
         'Ext.ux.WebSocketManager': '../resources/websocket/WebSocketManager.js',
         'Plus.view.Viewport': './app/view/Viewport.js',
-        'Plus.controller.WSocket': './app/controller/WSocket.js'
+        //'Plus.controller.WSocket': './app/controller/WSocket.js',
+        //'Plus.controller.OracleInternal': './app/controller/OracleInternal.js'
     }
 });
+
+//Ext.Loader.setPath('Plus', './app');
 
 //Ext.require('Ext.QuickTips');
 //Ext.require('Ext.container.Viewport');
 Ext.require (['Ext.ux.WebSocket', 'Ext.ux.WebSocketManager']);
-Ext.require('Plus.controller.WSocket');
+//Ext.require('Plus.controller.WSocket');
 Ext.require('Plus.view.Viewport');
-var mywebsocket; //웹소켓을 연결할 변수 선언
+//Ext.require('Plus.controller.OracleInternal');
+var mywebsocket; //웹소켓을 연결할 글로벌 전역변수 선언
 
 Ext.application({
     name: 'Plus',
@@ -37,7 +41,7 @@ Ext.application({
     //autoCreateViewport: true,
 
     launch: function() {
-        console.log('called function launch - application');
+        console.log('called function launch - application--------------------');
 
         Ext.create('Plus.view.Viewport');
 
@@ -51,21 +55,54 @@ Ext.application({
         //    },
         //    stopEvent: true
         //});
-    }
-});
 
-//Ext.onReady(function () {
-////    var oracleInternalController = Plus.app.getController('OracleInternal');
-////    oracleInternalController.onTablespaceInfo(); //시작함수 호출
-//    console.log('onReady function called');
-//});
-
-Ext.TaskManager.start({
-    run: function() {
-        var oracleInternalController = Plus.app.getController('OracleInternal');
-        oracleInternalController.onTablespaceInfo(); //시작함수 호출
-        console.log('onReady function called');
+        var myWS = Ext.create('Plus.controller.WSocket');
+        var ip = location.host;
+        mywebsocket = Ext.create('Ext.ux.WebSocket', {
+            url: 'ws://'+ip+'/wshandler',
+            listeners: {
+                open: function (ws) {
+                    console.log('The websocket is ready to use--------');
+                    //ws.send ('This is a simple text');
+                    myTaskScheduler();  // 스케쥴러 시작
+                    //var oracleInternalController = Plus.app.getController('OracleInternal');
+                    //oracleInternalController.onTablespaceInfo(); //시작함수 호출
+                },
+                close: function (ws) {
+                    console.log('The websocket is closed!');
+                },
+                error: function (ws, error) {
+                    Ext.Error.raise(error);
+                },
+                message: function (ws, message) {
+                    //console.log('A new message is arrived: ' + message); 서버측 응답메시지. 필요시만 찍을 것
+                    myWS.messageHandler(message);
+                }
+            }
+        });
     },
-    interval: 3000
+
+    //success : function() {
+    //    var oracleInternalController = Plus.app.getController('OracleInternal');
+    //    oracleInternalController.onTablespaceInfo(); //시작함수 호출
+    //}
 });
 
+Ext.onReady(function () {
+    //var oracleInternalController = Plus.app.getController('OracleInternal');
+    //while (!MyApp){;}
+    //var myoracleInternalController = Ext.create('Plus.controller.OracleInternal');
+    //myoracleInternalController.onTablespaceInfo(); //시작함수 호출
+    console.log('onReady function called-------------------');
+});
+
+var myTaskScheduler = function() {
+    Ext.TaskManager.start({
+        run: function() {
+            var oracleInternalController = Plus.app.getController('OracleInternal');
+            oracleInternalController.onTablespaceInfo(); //시작함수 호출
+            console.log('onReady function called');
+        },
+        interval: 3600000
+    });
+}

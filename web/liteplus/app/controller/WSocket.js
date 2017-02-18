@@ -9,25 +9,25 @@ Ext.define('Plus.controller.WSocket', {
         this.addEvents('newmessage');
         var me = this;
         var ip = location.host;
-        mywebsocket = Ext.create('Ext.ux.WebSocket', {
-            url: 'ws://'+ip+'/wshandler',
-            listeners: {
-                open: function (ws) {
-                    console.log('The websocket is ready to use');
-                    //ws.send ('This is a simple text');
-                },
-                close: function (ws) {
-                    console.log('The websocket is closed!');
-                },
-                error: function (ws, error) {
-                    Ext.Error.raise(error);
-                },
-                message: function (ws, message) {
-                    //console.log('A new message is arrived: ' + message); 서버측 응답메시지. 필요시만 찍을 것
-                    me.messageHandler(message);
-                }
-            }
-        });
+        //mywebsocket = Ext.create('Ext.ux.WebSocket', {
+        //    url: 'ws://'+ip+'/wshandler',
+        //    listeners: {
+        //        open: function (ws) {
+        //            console.log('The websocket is ready to use');
+        //            //ws.send ('This is a simple text');
+        //        },
+        //        close: function (ws) {
+        //            console.log('The websocket is closed!');
+        //        },
+        //        error: function (ws, error) {
+        //            Ext.Error.raise(error);
+        //        },
+        //        message: function (ws, message) {
+        //            //console.log('A new message is arrived: ' + message); 서버측 응답메시지. 필요시만 찍을 것
+        //            me.messageHandler(message);
+        //        }
+        //    }
+        //});
     },
 
     messageHandler : function(message){

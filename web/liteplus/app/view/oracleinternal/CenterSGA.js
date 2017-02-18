@@ -24,17 +24,31 @@ Ext.define('Plus.view.oracleinternal.CenterSGA', {
         },
         flex: 5,
         items: [{
-            xtype: 'label',
+            layout: 'absolute',
             html: '<div class="internal3ll internal"><img src="../resources/images/oracleinternal.png"/></div>',
-            flex: 1
+            flex: 1,
+            items: [{
+                xtype: 'label',
+                html: '<div style="color:red;background-color:yellow;font-weight:bolder;"><marquee direction=left scrollamount=5 width= 100>5000</marquee></div>',
+                x: 17,
+                y: 34,
+                anchor: '40% 20%'
+            }]
         },{
             xtype: 'label',
             html: '<div class="internal3lc internal"><img src="../resources/images/oracleinternal.png"/></div>',
             flex: 1
         },{
-            xtype: 'label',
+            layout: 'absolute',
             html: '<div class="internal3lr internal"><img src="../resources/images/oracleinternal.png"/></div>',
-            flex: 1
+            flex: 1,
+            items: [{
+                xtype: 'label',
+                html: '<div style="color:red;background-color:yellow;font-weight:bolder;"><marquee direction=left scrollamount=5 width=100>7000</marquee></div>',
+                x: 17,
+                y: 30,
+                anchor: '40% 20%'
+            }]
         }]
     }]
 

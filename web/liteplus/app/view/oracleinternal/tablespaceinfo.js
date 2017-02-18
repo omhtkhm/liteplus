@@ -4,11 +4,11 @@
 Ext.define('Plus.view.oracleinternal.TablespaceInfo', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.tablespaceinfo',
-
-    title: 'CGODB:1',
     name: 'tablespaceinfo',
+    style: 'border: solid #000 2px',
     hideHeaders: false,
-
+    //height: 100,
+    //width : 300,
     initComponent: function(){
         this.columns = [
             //{id:'company',header: 'Company', width: 160, sortable: true, dataIndex: 'company'},

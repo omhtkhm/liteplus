@@ -9,7 +9,7 @@ Ext.define('Plus.view.tableinfo.TableDetailTab', {
         'Plus.view.tableinfo.Index',
         'Plus.view.tableinfo.Constraint',
         'Plus.view.tableinfo.Grants',
-        'Plus.view.tableinfo.Trigger',
+        'Plus.view.tableinfo.MyTrigger',
         'Plus.view.tableinfo.DDL'
     ],
     activeTab: 0,
@@ -17,7 +17,7 @@ Ext.define('Plus.view.tableinfo.TableDetailTab', {
         {xtype: 'index'},
         {xtype: 'constraint'},
         {xtype: 'grants'},
-        {xtype: 'trigger'},
+        {xtype: 'mytrigger'},
         {xtype: 'ddl'}
     ]
 });

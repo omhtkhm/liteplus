@@ -1,12 +1,12 @@
 /**
  * Created by win on 2016-09-18.
  */
-Ext.define('Plus.view.tableinfo.Trigger', {
+Ext.define('Plus.view.tableinfo.MyTrigger', {
     extend: 'Ext.form.field.TextArea',
-    alias: 'widget.trigger',
+    alias: 'widget.mytrigger',
 
-    title: 'Trigger',
-    name: 'trigger',
+    title: 'MyTrigger',
+    name: 'mytrigger',
 
     initComponent: function(){
         //this.columns = [

@@ -1,6 +1,7 @@
 /**
  * Created by hun on 2016-09-12.
  */
+//Ext.require('Plus.view.main.OracleInternal');
 Ext.define('Plus.controller.OracleInternal',{
     extend: 'Ext.app.Controller',
     alias: 'controller.oracleinternal',
