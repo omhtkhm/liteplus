@@ -72,7 +72,9 @@ Ext.define('Plus.controller.OracleInternal',{
             return {
                 text: Ext.String.capitalize(field),
                 //width: 150,
-                dataIndex: field
+                dataIndex: field,
+                cls: 'internalGridHeader',
+                flex: 1
             };
         });
     }

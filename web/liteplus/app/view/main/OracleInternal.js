@@ -11,16 +11,67 @@ Ext.define('Plus.view.main.OracleInternal',{
         'Plus.view.tableinfo.TableDetailTab',
         'Plus.view.tableinfo.ColumnInfo',
 
-        'Plus.view.oracleinternal.TablespaceInfo'
+        'Plus.view.oracleinternal.TablespaceInfo',
+        'Plus.view.oracleinternal.Panel1',
+        'Plus.view.oracleinternal.Panel2',
+        'Plus.view.oracleinternal.Panel3',
+        'Plus.view.oracleinternal.Panel4'
     ],
-    layout: 'border',
+    //layout: 'border',
+    //items: [{
+    //    region: 'west',
+    //    xtype: 'label',
+    //    html: '<img src="../resources/images/oracleinternal2.png"  width="1182" height="800"/>'
+    //},{
+    //    region: 'center',
+    //    xtype: 'tablespaceinfo'
+    //}]
+    layout: {
+        type : 'hbox',
+        align : 'stretch'
+    },
     items: [{
-        region: 'west',
         xtype: 'label',
-        html: '<img src="../resources/images/oracleinternal2.png"  width="1182" height="800"/>'
+        html: '<div class="internal1 internal"><img src="../resources/images/oracleinternal.png"/></div>',
+        flex: 1
     },{
-        region: 'center',
-        xtype: 'tablespaceinfo'
-    }]
-
+        xtype: 'label',
+        html: '<div class="internal2 internal"><img src="../resources/images/oracleinternal.png"/></div>',
+        flex: 0.5
+    },{
+        xtype: 'panel3',
+        flex: 2.5
+    },
+    //    {
+    //    xtype: 'label',
+    //    html: '<div class="internal4 internal"><img src="../resources/images/oracleinternal.png"/></div>',
+    //    flex: 2
+    //}
+        {
+            layout: 'absolute',
+            html: '<div class="internal4 internal"><img src="../resources/images/oracleinternal.png"/></div>',
+            flex: 2,
+            items: [{
+                xtype: 'tablespaceinfo',
+                x: 19.5,
+                y: 109,
+                anchor: '88.8% 46.8%'
+            },{
+                xtype: 'panel1',
+                x: 19.5,
+                y: 344,
+                anchor: '88.8% 63%'
+            },{
+                xtype: 'panel2',
+                x: 19.5,
+                y: 426,
+                anchor: '88.8% 70%'
+            },{
+                xtype: 'panel4',
+                x: 19.5,
+                y: 503,
+                anchor: '88.8% 88%'
+            }]
+        }
+    ]
 });
