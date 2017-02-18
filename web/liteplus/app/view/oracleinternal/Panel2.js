@@ -4,6 +4,7 @@
 Ext.define('Plus.view.oracleinternal.Panel2', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.panel2',
+    style: 'border: solid #000 2px',
     store: Ext.create('Ext.data.Store', {
         model : Ext.define('User', {
             extend: 'Ext.data.Model',

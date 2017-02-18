@@ -10,12 +10,11 @@ Ext.define('Plus.view.main.OracleInternal',{
         'Plus.view.tableinfo.TableInfo',
         'Plus.view.tableinfo.TableDetailTab',
         'Plus.view.tableinfo.ColumnInfo',
-
+        'Plus.view.oracleinternal.CenterSGA',
         'Plus.view.oracleinternal.TablespaceInfo',
         'Plus.view.oracleinternal.Panel1',
         'Plus.view.oracleinternal.Panel2',
-        'Plus.view.oracleinternal.Panel3',
-        'Plus.view.oracleinternal.Panel4'
+        'Plus.view.oracleinternal.Panel3'
     ],
     //layout: 'border',
     //items: [{
@@ -39,7 +38,7 @@ Ext.define('Plus.view.main.OracleInternal',{
         html: '<div class="internal2 internal"><img src="../resources/images/oracleinternal.png"/></div>',
         flex: 0.5
     },{
-        xtype: 'panel3',
+        xtype: 'centerSGA',
         flex: 2.5
     },
     //    {
@@ -67,7 +66,7 @@ Ext.define('Plus.view.main.OracleInternal',{
                 y: 426,
                 anchor: '88.8% 70%'
             },{
-                xtype: 'panel4',
+                xtype: 'panel3',
                 x: 19.5,
                 y: 503,
                 anchor: '88.8% 88%'
